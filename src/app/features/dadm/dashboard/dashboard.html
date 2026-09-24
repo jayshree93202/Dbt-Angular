@@ -1,0 +1,486 @@
+<div class="dashboard-page">
+
+  <!-- ===================================== -->
+  <!-- HERO BANNER SECTION -->
+  <!-- ===================================== -->
+
+<section class="dashboard-hero">
+
+  <!-- Background Building -->
+  <div class="hero-building"></div>
+
+  <!-- Soft Overlay -->
+  <div class="hero-overlay"></div>
+
+  <div class="hero-content">
+
+    <!-- LEFT CONTENT -->
+    <div class="hero-left">
+
+      <span class="government-label">
+        Government of Bihar
+      </span>
+
+      <h1>
+        Direct Benefit Transfer
+      </h1>
+
+      <div class="hero-tagline">
+        <span>Transparent</span>
+        <span class="tag-dot">•</span>
+        <span>Accountable</span>
+        <span class="tag-dot">•</span>
+        <span>Citizen Centric</span>
+      </div>
+
+      <div class="hero-line"></div>
+
+      <p>
+        Ensuring timely and direct transfer of benefits
+        to every eligible citizen of Bihar.
+      </p>
+
+    </div>
+
+
+    <!-- BIHAR MAP -->
+    <div class="hero-map-graphic">
+
+      <img
+        src="assets/images/logos/biharmap.png"
+        alt="Bihar Map"
+      >
+
+    </div>
+
+
+    <!-- TOTAL BENEFICIARIES CARD -->
+    <div class="beneficiary-card">
+
+      <div class="beneficiary-icon">
+        <i class="bi bi-people-fill"></i>
+      </div>
+
+
+      <div class="beneficiary-info">
+
+        <span class="beneficiary-title">
+          Total Beneficiaries
+        </span>
+
+        <h2 class="stat-value">
+  {{ cumulativeAmount.totalCumulativeAmount }}
+</h2>
+
+<p class="stat-label">
+  {{ cumulativeAmount.cumulativeAmountFYear }}
+</p>
+
+<span>
+  FY {{ cumulativeAmount.fYear }}
+</span>
+        
+        <div class="beneficiary-growth">
+
+          <span class="growth">
+            <i class="bi bi-arrow-up"></i>
+            +12.5%
+          </span>
+
+          <span class="last-year">
+            vs. last year
+          </span>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+  <!-- ===================================== -->
+  <!-- 5 STATISTIC CARDS ROW -->
+  <!-- ===================================== -->
+
+  <section class="stats-grid">
+
+
+    <!-- 1. Registered Departments -->
+
+    <div class="stat-card card-department">
+
+      <div class="stat-icon-wrapper">
+        <div class="stat-icon-halo"></div>
+        <div class="stat-icon-badge">
+          <i class="bi bi-bank"></i>
+        </div>
+      </div>
+
+      <div class="stat-content">
+
+        <span class="stat-title">
+          Registered Departments
+        </span>
+        <span class="stat-fy">(FY: 2026-2027)</span>
+
+        
+
+        <h2 class="stat-value"> {{ totalDepartment }}</h2>
+
+        <a href="javascript:void(0)" class="view-details">
+          View details
+          <i class="bi bi-arrow-right"></i>
+        </a>
+
+      </div>
+
+    </div>
+
+
+    <!-- 2. Registered Schemes -->
+
+    <div class="stat-card card-schemes">
+
+      <div class="stat-icon-wrapper">
+        <div class="stat-icon-halo"></div>
+        <div class="stat-icon-badge">
+          <i class="bi bi-card-checklist"></i>
+        </div>
+      </div>
+
+      <div class="stat-content">
+
+        <span class="stat-title">
+          Registered Schemes
+        </span>
+<span class="stat-fy">(FY: 2026-2027)</span>
+       <h2 class="stat-value"> {{ totalScheme  }}</h2>
+
+        <a href="javascript:void(0)" class="view-details">
+          View details
+          <i class="bi bi-arrow-right"></i>
+        </a>
+
+      </div>
+
+    </div>
+
+
+    <!-- 3. Total DBT -->
+
+    <div class="stat-card card-dbt">
+
+      <div class="stat-icon-wrapper">
+        <div class="stat-icon-halo"></div>
+        <div class="stat-icon-badge">
+          <i class="bi bi-currency-rupee"></i>
+        </div>
+      </div>
+
+      <div class="stat-content">
+
+        <span class="stat-title red-title">
+          Total DBT
+        </span>
+
+        <span class="stat-fy">(FY: 2026-2027)</span>
+
+        <h2 class="stat-value">₹ 2,864.78 Cr</h2>
+               
+        <span class="stat-growth">
+          <i class="bi bi-arrow-up"></i>
+          +18.2%
+          <span>vs. last year</span>
+        </span>
+
+        <a href="javascript:void(0)" class="view-details">
+          View details
+          <i class="bi bi-arrow-right"></i>
+        </a>
+
+      </div>
+
+    </div>
+
+
+    <!-- 4. Department Reported -->
+
+    <div class="stat-card card-reported">
+
+      <div class="stat-icon-wrapper">
+        <div class="stat-icon-halo"></div>
+        <div class="stat-icon-badge">
+          <i class="bi bi-buildings"></i>
+        </div>
+      </div>
+
+      <div class="stat-content">
+
+        <span class="stat-title">
+          Department Reported
+        </span>
+
+        <span class="stat-fy">(FY: 2026-2027)</span>
+
+        <h2 class="stat-value">  {{ totalPayDepartment }}</h2>
+
+        <a href="javascript:void(0)" class="view-details">
+          View details
+          <i class="bi bi-arrow-right"></i>
+        </a>
+
+      </div>
+
+    </div>
+
+
+    <!-- 5. DBT Reported Schemes -->
+
+    <div class="stat-card card-report-scheme">
+
+      <div class="stat-icon-wrapper">
+        <div class="stat-icon-halo"></div>
+        <div class="stat-icon-badge">
+          <i class="bi bi-file-earmark-text"></i>
+        </div>
+      </div>
+
+      <div class="stat-content">
+
+        <span class="stat-title">
+          DBT Reported Schemes
+        </span>
+
+        <span class="stat-fy">(FY: 2026-2027)</span>
+
+        <h2 class="stat-value">  {{ totalPayScheme }}</h2>
+
+        <a href="javascript:void(0)" class="view-details">
+          View details
+          <i class="bi bi-arrow-right"></i>
+        </a>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- ===================================== -->
+  <!-- ROW 2: PIE CHART + DEPARTMENT MARQUEE CARD -->
+  <!-- ===================================== -->
+
+  <section class="top-dashboard-grid">
+
+
+    <!-- Schemes by Department (Highcharts Pie Chart) -->
+
+    <div class="dashboard-card chart-card">
+
+     <div class="card-header">
+
+  <div class="card-title">
+
+    <div class="title-icon">
+      <i class="bi bi-bank"></i>
+    </div>
+
+    <h5>Schemes by Department</h5>
+
+  </div>
+
+
+  <div class="chart-actions">
+
+    
+
+    <button class="chart-download-btn">
+      <i class="bi bi-download"></i>
+    </button>
+
+  </div>
+
+</div>
+
+
+      <div class="chart-wrapper">
+
+        <highcharts-chart
+          [options]="departmentChartOptions"
+          style="width: 100%; height: 320px; display: block;">
+        </highcharts-chart>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- Departments (UL/LI Marquee Down-to-Up) -->
+
+    
+    <div class="dashboard-card department-card">
+
+      <div class="card-header">
+
+        <div class="card-title">
+
+          <div class="title-icon">
+            <i class="bi bi-buildings-fill"></i>
+          </div>
+
+          <h5>Departments</h5>
+
+        </div>
+
+      </div>
+
+
+      <div class="department-marquee-container">
+
+        <ul class="department-marquee">
+
+          <li *ngFor="let dept of departments">
+
+            <div class="department-left">
+
+              <div class="department-icon">
+                <i class="bi" [ngClass]="dept.name_Symbol"></i>
+              </div>
+
+              <span>{{ dept.name }}</span>
+
+            </div>
+
+            <span class="scheme-count">{{ dept.totalScheme }} Schemes</span>
+
+          </li>
+
+
+          <!-- Duplicate list for seamless infinite down-to-up marquee scroll -->
+
+          <li *ngFor="let dept of departments">
+
+            <div class="department-left">
+
+              <div class="department-icon">
+                <i class="bi" [ngClass]="dept.name_Symbol"></i>
+              </div>
+
+              <span>{{ dept.name }}</span>
+
+            </div>
+
+            <span class="scheme-count">{{ dept.totalScheme }} Schemes</span>
+
+          </li>
+
+        </ul>
+
+      </div>
+
+    </div>
+
+
+  </section>
+
+
+
+  <!-- ===================================== -->
+  <!-- ROW 3: OTHER TWO GRAPHS (FUND TRANSFER + BENEFICIARIES STACKED AREA) -->
+  <!-- ===================================== -->
+
+  <section class="bottom-dashboard-grid">
+
+
+    <!-- Year Wise Fund Transfer (Highcharts Column Chart with Gradients) -->
+
+    <div class="dashboard-card chart-card">
+
+      <div class="card-header">
+
+        <div class="card-title">
+
+          <div class="title-icon">
+            <i class="bi bi-bar-chart-line-fill"></i>
+          </div>
+
+          <h5>Year Wise Fund Transfer</h5>
+
+        </div>
+        
+
+        <button class="filter-btn">
+          Last 6 Years
+          <i class="bi bi-chevron-down"></i>
+        </button>
+        
+
+      </div>
+
+
+      <div class="chart-wrapper">
+
+        <highcharts-chart
+          [options]="fundTransferOptions"
+          style="width: 100%; height: 320px; display: block;">
+        </highcharts-chart>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- Year Wise DBT Beneficiaries (Highcharts Stacked Line / Area Chart) -->
+
+    <div class="dashboard-card chart-card">
+
+      <div class="card-header">
+
+        <div class="card-title">
+
+          <div class="title-icon">
+            <i class="bi bi-graph-up-arrow"></i>
+          </div>
+
+          <h5>Year Wise Beneficiaries (Stacked)</h5>
+
+        </div>
+
+        <button class="filter-btn">
+          Last 6 Years
+          <i class="bi bi-chevron-down"></i>
+        </button>
+
+      </div>
+
+ 
+      <div class="chart-wrapper">
+
+        <highcharts-chart
+          [options]="beneficiariesOptions"
+          style="width: 100%; height: 320px; display: block;">
+        </highcharts-chart>
+
+      </div> 
+
+    </div>
+
+  </section>
+
+
+
+  <!-- ===================================== -->
+  <!-- ROW 4: RECENT SCHEMES TABLE + QUICK LINKS -->
+  <!-- ===================================== -->
+
+
+
+</div>

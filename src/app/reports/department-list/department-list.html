@@ -1,0 +1,46 @@
+<div class="department-list-container">
+
+  <!-- Page Title -->
+  <h2 class="page-title">
+    List of Department
+  </h2>
+
+  <!-- Table Card -->
+  <div class="table-card">
+
+    <div class="table-responsive">
+
+      <table class="department-table">
+
+        <thead>
+          <tr>
+            <th>Sr. No.</th>
+            <th>Department</th>
+            <th>Email</th>
+            <th>Mobile</th>
+          </tr>
+        </thead>
+
+     <tbody>
+
+  <tr *ngFor="let department of departments; let i = index">
+
+    <td>{{ i + 1 }}</td>
+
+    <td>{{ department.name }}</td>
+
+    <td>{{ department.email || 'N/A' }}</td>
+
+    <td>{{ department.mobile || 'N/A' }}</td>
+
+  </tr>
+
+     </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</div>

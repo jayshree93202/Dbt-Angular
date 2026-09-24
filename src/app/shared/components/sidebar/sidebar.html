@@ -1,0 +1,214 @@
+<aside
+  class="sidebar"
+  [class.sidebar-hidden]="!isOpen">
+
+
+  <!-- Government Brand -->
+  <div class="sidebar-brand">
+
+    <div class="gov-logo">
+      <img
+        src="assets/images/logos/biharlogo.png"
+        alt="Government of Bihar Logo"
+        class="sidebar-logo-img"
+      />
+    </div>
+
+    <div class="brand-text">
+      <h2 class="brand-title">बिहार सरकार</h2>
+      <span class="brand-subtitle">समृद्ध बिहार, सशक्त बिहार</span>
+    </div>
+
+  </div>
+
+
+  <!-- Navigation -->
+  <nav class="sidebar-nav">
+
+    <!-- Dashboard -->
+    <a
+      routerLink="/dashboard"
+      routerLinkActive="active"
+      class="nav-item">
+
+      <i class="bi bi-house-door-fill"></i>
+      <span>Dashboard</span>
+
+    </a>
+
+
+    <!-- About -->
+    <a
+      routerLink="/about"
+      routerLinkActive="active"
+      class="nav-item">
+
+      <i class="bi bi-file-earmark-text-fill"></i>
+      <span>About Us</span>
+
+    </a>
+
+
+    <!-- Reports -->
+   
+<!-- Reports -->
+<div class="nav-group">
+
+  <a
+    href="javascript:void(0)"
+    class="nav-item"
+    (click)="reportsOpen = !reportsOpen">
+
+    <i class="bi bi-clipboard-data-fill"></i>
+    <span>Reports</span>
+
+    <i
+      class="bi ms-auto"
+      [ngClass]="reportsOpen ? 'bi-chevron-up' : 'bi-chevron-down'">
+    </i>
+
+  </a>
+
+  <!-- Reports Sub Menus -->
+  <div class="submenu" *ngIf="reportsOpen">
+
+    
+
+     <a
+      routerLink="/reports/department-wise"
+      routerLinkActive="active"
+      class="submenu-item">
+      <i class="bi bi-building"></i>
+      <span>Cumulative Details Report</span>
+    </a>
+
+    <a
+      routerLink="/reports/department-list"
+      routerLinkActive="active"
+      class="submenu-item">
+      <i class="bi bi-building"></i>
+      <span>Department List</span>
+    </a>
+
+    <a
+      routerLink="/reports/scheme-wise"
+      routerLinkActive="active"
+      class="submenu-item">
+      <i class="bi bi-diagram-3"></i>
+      <span>Department Wise Scheme List</span>
+    </a>
+
+    <a
+      routerLink="/reports/beneficiary"
+      routerLinkActive="active"
+      class="submenu-item">
+      <i class="bi bi-people-fill"></i>
+      <span>Department CSS and State Scheme List</span>
+    </a>
+
+    <a
+      routerLink="/reports/fund-transfer"
+      routerLinkActive="active"
+      class="submenu-item">
+      <i class="bi bi-cash-stack"></i>
+      <span>Last Updated Scheme List</span>
+    </a>  
+
+   
+
+  </div>
+
+</div>
+
+
+    <!-- <a
+      routerLink="/reports"
+      routerLinkActive="active"
+      class="nav-item">
+
+      <i class="bi bi-clipboard-data-fill"></i>
+      <span>Reports</span>
+
+    </a> -->
+
+   
+
+
+
+
+    <!-- Schemes -->
+    <a
+      routerLink="/schemes"
+      routerLinkActive="active"
+      class="nav-item">
+
+      <i class="bi bi-diagram-3-fill"></i>
+      <span>Schemes</span>
+
+    </a>
+
+
+    <!-- Beneficiaries -->
+    <a
+      routerLink="/beneficiaries"
+      routerLinkActive="active"
+      class="nav-item">
+
+      <i class="bi bi-people-fill"></i>
+      <span>Beneficiaries</span>
+
+    </a>
+
+
+    <!-- Departments -->
+    <a
+      routerLink="/departments"
+      routerLinkActive="active"
+      class="nav-item">
+
+      <i class="bi bi-bank"></i>
+      <span>Departments</span>
+
+    </a>
+
+
+    <!-- Grievance -->
+    <a
+      routerLink="/grievance"
+      routerLinkActive="active"
+      class="nav-item">
+
+      <i class="bi bi-chat-left-text-fill"></i>
+      <span>Grievance</span>
+
+    </a>
+
+  </nav>
+
+
+  <!-- Bottom -->
+  <div class="sidebar-bottom">
+
+    <a
+      routerLink="/settings"
+      routerLinkActive="active"
+      class="nav-item">
+
+      <i class="bi bi-gear-fill"></i>
+      <span>Settings</span>
+
+    </a>
+
+  <div class="sidebar-building">
+  <!-- <img 
+    src="assets/images/logos/dbtlogo.png" 
+    alt="Government of Bihar"
+    class="sidebar-building-image"
+  > -->
+
+  
+</div>
+
+  </div>
+
+</aside>

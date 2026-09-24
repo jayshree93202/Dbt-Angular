@@ -1,0 +1,393 @@
+/* =========================================
+   CUMULATIVE DETAILS REPORT
+   Bihar Government Theme
+   ========================================= */
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.cumulative-report-container {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 24px 28px 30px;
+  background: #f3f7fb;
+  min-height: calc(100vh - 125px);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* =========================================
+   PAGE TITLE
+   ========================================= */
+
+.page-title {
+  margin: 0 0 22px;
+  text-align: center;
+  color: #1676d2;
+  font-size: 34px;
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+/* =========================================
+   FILTER SECTION
+   ========================================= */
+
+.filter-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 28px;
+  margin-bottom: 28px;
+}
+
+.filter-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.filter-field label {
+  margin-bottom: 8px;
+  font-size: 18px;
+  font-weight: 500;
+  color: #222;
+}
+
+.filter-field select {
+  width: 100%;
+  height: 48px;
+  padding: 0 14px;
+
+  background: #fff;
+  border: 1px solid #cfd5da;
+  border-radius: 5px;
+
+  font-size: 16px;
+  color: #444;
+
+  outline: none;
+  cursor: pointer;
+
+  box-sizing: border-box;
+}
+
+.filter-field select:focus {
+  border-color: #1769aa;
+  box-shadow: 0 0 0 2px rgba(23, 105, 170, 0.12);
+}
+
+/* =========================================
+   TABLE CARD
+   ========================================= */
+
+.table-card {
+  width: 100%;
+  background: #fff;
+
+  border: 1px solid #d9d9d9;
+  border-radius: 3px;
+
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+
+  overflow: hidden;
+}
+
+/* =========================================
+   TABLE TOOLBAR
+   ========================================= */
+
+.table-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  padding: 20px 22px 8px;
+  background: #fff;
+}
+
+.download-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  height: 48px;
+  padding: 0 18px;
+
+  border: 1px solid #2678b9;
+  border-radius: 0;
+
+  background: #337fb8;
+  color: #fff;
+
+  font-size: 17px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.download-btn:hover {
+  background: #286da0;
+}
+
+.download-btn i {
+  font-size: 18px;
+}
+
+/* =========================================
+   TABLE
+   ========================================= */
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.report-table {
+  width: 100%;
+  min-width: 1250px;
+
+  border-collapse: collapse;
+  table-layout: fixed;
+
+  font-size: 16px;
+}
+
+/* HEADER */
+
+.report-table thead {
+  background: #0d3983;
+  color: #fff;
+}
+
+.report-table th {
+  padding: 15px 14px;
+
+  background: #0d3983;
+  color: #fff;
+
+  border-right: 1px solid rgba(255, 255, 255, 0.25);
+  border-bottom: 1px solid #0d3983;
+
+  font-size: 17px;
+  font-weight: 700;
+
+  text-align: left;
+  vertical-align: middle;
+
+  line-height: 1.45;
+}
+
+.report-table th:first-child {
+  text-align: center;
+}
+
+/* BODY */
+
+.report-table td {
+  padding: 12px 10px;
+
+  border-right: 1px solid #9db6d0;
+  border-bottom: 1px solid #9db6d0;
+
+  color: #111;
+  background: #fff;
+
+  vertical-align: middle;
+
+  line-height: 1.45;
+}
+
+.report-table tbody tr:nth-child(even) td {
+  background: #f7fbff;
+}
+
+.report-table tbody tr:hover td {
+  background: #edf5fc;
+}
+
+/* =========================================
+   COLUMN WIDTHS
+   ========================================= */
+
+.report-table th:nth-child(1),
+.report-table td:nth-child(1) {
+  width: 55px;
+  text-align: center;
+}
+
+.report-table th:nth-child(2),
+.report-table td:nth-child(2) {
+  width: 145px;
+}
+
+.report-table th:nth-child(3),
+.report-table td:nth-child(3) {
+  width: 360px;
+}
+
+.report-table th:nth-child(4),
+.report-table td:nth-child(4) {
+  width: 120px;
+}
+
+.report-table th:nth-child(5),
+.report-table td:nth-child(5) {
+  width: 140px;
+}
+
+.report-table th:nth-child(6),
+.report-table td:nth-child(6) {
+  width: 170px;
+}
+
+.report-table th:nth-child(7),
+.report-table td:nth-child(7) {
+  width: 145px;
+}
+
+.report-table th:nth-child(8),
+.report-table td:nth-child(8) {
+  width: 180px;
+}
+
+.report-table th:nth-child(9),
+.report-table td:nth-child(9) {
+  width: 125px;
+}
+
+/* Scheme text */
+
+.scheme-name {
+  line-height: 1.45;
+}
+
+/* Numeric columns */
+
+.text-right {
+  text-align: right !important;
+  white-space: nowrap;
+}
+
+/* =========================================
+   TOTAL ROW
+   ========================================= */
+
+.report-table tfoot td {
+  padding: 14px 10px;
+
+  background: #e7f1fa;
+
+  border-top: 2px solid #6f98bc;
+  border-right: 1px solid #9db6d0;
+
+  color: #123d64;
+
+  font-size: 16px;
+  font-weight: 700;
+}
+
+/* =========================================
+   NO DATA
+   ========================================= */
+
+.no-data {
+  padding: 30px !important;
+
+  text-align: center !important;
+
+  color: #777 !important;
+  font-size: 16px;
+}
+
+/* =========================================
+   PAGINATION
+   ========================================= */
+
+.pagination-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 14px 18px;
+
+  background: #fff;
+
+  border-top: 1px solid #d9e2ea;
+}
+
+.pagination-info {
+  color: #555;
+  font-size: 14px;
+}
+
+.pagination-buttons {
+  display: flex;
+  gap: 5px;
+}
+
+.pagination-buttons button {
+  min-width: 34px;
+  height: 34px;
+
+  padding: 0 8px;
+
+  border: 1px solid #cbd5df;
+  border-radius: 3px;
+
+  background: #fff;
+  color: #164b76;
+
+  font-size: 14px;
+
+  cursor: pointer;
+}
+
+.pagination-buttons button:hover,
+.pagination-buttons button.active {
+  background: #0d3983;
+  color: #fff;
+  border-color: #0d3983;
+}
+
+/* =========================================
+   RESPONSIVE
+   ========================================= */
+
+@media (max-width: 1000px) {
+
+  .cumulative-report-container {
+    padding: 18px;
+  }
+
+  .filter-row {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .page-title {
+    font-size: 28px;
+  }
+
+  .table-toolbar {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 600px) {
+
+  .cumulative-report-container {
+    padding: 12px;
+  }
+
+  .page-title {
+    font-size: 24px;
+  }
+
+  .filter-field label {
+    font-size: 16px;
+  }
+
+  .filter-field select {
+    height: 44px;
+  }
+}

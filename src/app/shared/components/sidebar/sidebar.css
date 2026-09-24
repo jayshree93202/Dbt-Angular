@@ -1,0 +1,295 @@
+/* ================================
+   SIDEBAR
+================================ */
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: 235px;
+  height: 100vh;
+
+  background: #073b78;
+
+  display: flex;
+  flex-direction: column;
+
+  color: #ffffff;
+
+  z-index: 1000;
+
+  overflow-y: auto;
+
+  transition: transform 0.3s ease, width 0.3s ease;
+}
+
+.sidebar-hidden {
+  transform: translateX(-100%);
+}
+
+.nav-group {
+  width: 100%;
+}
+
+.submenu {
+  margin-left: 25px;
+  padding-left: 12px;
+  border-left: 1px solid rgba(255,255,255,0.15);
+}
+
+.submenu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  color: #b8c1d1;
+  text-decoration: none;
+  font-size: 14px;
+  border-radius: 6px;
+}
+
+.submenu-item:hover,
+.submenu-item.active {
+  background: rgba(255,255,255,0.10);
+  color: white;
+}
+
+/* ================================
+   GOVERNMENT BRAND
+================================ */
+
+.sidebar-brand {
+  height: 90px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  /* padding: 12px 16px; */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15); /* Separating bottom line */
+  box-sizing: border-box;
+}
+
+/* --- 1. LOGO IMAGE STYLING --- */
+.gov-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.sidebar-logo-img {
+  width: 71px;         /* LARGER LOGO IMAGE WIDTH */
+  height: 62px;        /* LARGER LOGO IMAGE HEIGHT */
+  max-width: 75px;
+  max-height: 75px;
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.2));
+  transition: all 0.3s ease;
+}
+
+/* --- 2. BRAND TEXT STYLING ("बिहार सरकार") --- */
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+  flex: 1;
+}
+
+.brand-title {
+  font-size: 22px;     /* PROPORTIONAL "बिहार सरकार" FONT SIZE */
+  font-weight: 800;    /* EXTRA BOLD WEIGHT */
+  color: #ffffff;
+  margin: 0;           /* NO AWKWARD MARGIN BOTTOM */
+  line-height: 1.25;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+  transition: font-size 0.3s ease;
+  margin-bottom: 13px;
+}
+
+.brand-subtitle {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.82);
+  margin-top: 2px;
+  white-space: nowrap;
+}
+
+
+/* ================================
+   NAVIGATION
+================================ */
+
+.sidebar-nav {
+  padding: 20px 8px;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 6px;
+}
+
+.nav-item {
+  height: 50px;
+
+  padding: 0 16px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 18px;
+
+  color: rgba(255, 255, 255, 0.88);
+
+  text-decoration: none;
+
+  border-radius: 6px;
+
+  font-size: 14px;
+
+  transition: all 0.2s ease;
+}
+
+.nav-item i:first-child {
+  font-size: 21px;
+
+  width: 25px;
+
+  text-align: center;
+}
+
+.nav-item span {
+  flex: 1;
+}
+
+.nav-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+
+  color: #ffffff;
+}
+
+.nav-item.active {
+  background: #1565b7;
+
+  color: #ffffff;
+
+  font-weight: 600;
+
+  box-shadow: inset 3px 0 0 rgba(255, 255, 255, 0.25);
+}
+
+.dropdown-icon {
+  font-size: 13px !important;
+
+  width: auto !important;
+}
+
+
+/* ================================
+   BOTTOM AREA
+================================ */
+
+.sidebar-bottom {
+  margin-top: auto;
+
+  padding: 8px;
+}
+
+.sidebar-building {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  padding: 12px 8px;
+}
+
+.sidebar-building i {
+  font-size: 110px;
+  margin-bottom: 8px;
+}
+
+.sidebar-building span {
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: 8px;
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+
+/* ================================
+   RESPONSIVE SCALING
+================================ */
+
+@media (max-width: 1200px) {
+  .sidebar {
+    width: 225px;
+  }
+  .sidebar-brand {
+    padding: 10px 12px;
+    gap: 10px;
+  }
+  .sidebar-logo-img {
+    width: 54px;
+    height: 54px;
+  }
+  .brand-title {
+    font-size: 21px;
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 235px;
+  }
+  .sidebar-brand {
+    padding: 12px 14px;
+    gap: 10px;
+  }
+  .sidebar-logo-img {
+    width: 56px;
+    height: 56px;
+  }
+  .brand-title {
+    font-size: 22px;
+  }
+}
+.sidebar-building-image {
+  width: 140px;
+  height: 140px;
+  object-fit: contain;
+  display: block;
+
+  border-radius: 50%;
+  padding: 6px;
+ 
+  opacity: 1;
+  /* transition: transform 0.3s ease, box-shadow 0.3s ease; */
+}
+
+/* .sidebar-building-image:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+} */
+.sidebar-building-image[_ngcontent-ng-c1893427563] {
+    width: 223px;
+    height: 170px;
+    object-fit: contain;
+    display: block;
+    /* background: #ffffff; */
+    border-radius: 50%;
+    padding: 6px;
+    /* box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25); */
+    opacity: 1;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.brand-title[_ngcontent-ng-c1893427563] {
+    font-size: 21px;
+    margin-bottom: 1px;
+}
+.brand-subtitle[_ngcontent-ng-c871445150] {
+    margin-top: -12px;
+}

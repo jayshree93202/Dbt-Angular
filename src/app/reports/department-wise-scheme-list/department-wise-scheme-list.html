@@ -1,0 +1,158 @@
+<div class="scheme-page">
+
+  <!-- Page Title -->
+  <h2 class="page-title">Department Wise Scheme List</h2>
+
+ <!-- Filter Section -->
+<div class="filter-section">
+
+  <!-- Financial Year -->
+  <div class="filter-group">
+
+    <label for="financialYear">
+      Financial Year
+    </label>
+
+    <select
+      id="financialYear"
+      class="form-control"
+      [(ngModel)]="selectedFYear"
+      (change)="onFilterChange()">
+
+      <option value="">--All--</option>
+
+      @for (year of financialYears; track year.fYearCode) {
+        <option [value]="year.fYearCode">
+          {{ year.fYear }}
+        </option>
+      }
+
+    </select>
+
+  </div>
+
+
+  <!-- Department -->
+  <div class="filter-group">
+
+    <label for="department">
+      Department
+    </label>
+
+    <select
+      id="department"
+      class="form-control"
+      [(ngModel)]="selectedDepartment"
+      (change)="onFilterChange()">
+
+      <option value="">
+        --All Department--
+      </option>
+
+      @for (department of departments; track department.deptCode) {
+        <option [value]="department.deptCode">
+          {{ department.name }}
+        </option>
+      }
+
+    </select>
+
+  </div>
+
+
+  <!-- Never Reported -->
+  <div class="reported-option">
+
+    <label>
+      <input
+        type="radio"
+        name="reported"
+        value="never">
+
+      Never Reported
+    </label>
+
+  </div>
+
+</div>
+
+  
+
+  <!-- Scheme Table -->
+  <div class="table-wrapper">
+    <table class="scheme-table">
+
+      <thead>
+        <tr>
+          <th>Sr. No.</th>
+          <th>Department</th>
+          <th>Scheme Type</th>
+          <th>Scheme Name</th>
+          <th>DBT Code</th>
+          <th>Last Update</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+  @if (loading) {
+
+    <tr>
+      <td colspan="6" class="no-data">
+        Loading...
+      </td>
+    </tr>
+
+  }
+  @else if (schemes.length === 0) {
+
+    <tr>
+      <td colspan="6" class="no-data">
+        No scheme data found
+      </td>
+    </tr>
+
+  }
+  @else {
+
+    @for (scheme of schemes; track $index) {
+
+      <tr>
+
+        <td>
+          {{ $index + 1 }}
+        </td>
+
+        <td>
+          {{ scheme.name }}
+        </td>
+
+        <td>
+          {{ scheme.schemeType }}
+        </td>
+
+        <td>
+          {{ scheme.schemeName }}
+        </td>
+
+        <td>
+          {{ scheme.dbtSchemeCode }}
+        </td>
+
+        <td>
+          {{ scheme.lastUpdateDate || 'N/A' }}
+        </td>
+
+      </tr>
+
+    }
+
+  }
+
+</tbody>
+
+    </table>
+  </div>
+  
+
+</div>

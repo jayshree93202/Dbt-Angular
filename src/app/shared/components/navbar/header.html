@@ -1,0 +1,83 @@
+<header class="top-header">
+
+  <!-- Left Section -->
+  <div class="header-left">
+
+    <!-- Menu Button -->
+<button
+  class="menu-btn"
+  type="button"
+  (click)="onToggleSidebar()">
+
+  <i class="bi bi-list"></i>
+
+</button>
+
+    <!-- Bihar Government Logo -->
+    <!-- <img
+      src="assets/images/logos/biharlogo.png"
+      alt="Government of Bihar Logo"
+      class="navbar-logo"
+    /> -->
+
+    <!-- Title -->
+    <div class="header-title">
+      <h1>Direct Benefit Transfer</h1>
+      <span>Finance Department, Government of Bihar</span>
+    </div>
+
+  </div>
+
+
+  <!-- Right Section -->
+  <div class="header-right">
+
+    <!-- Search -->
+    <div class="search-box">
+      <i class="bi bi-search"></i>
+
+      <input
+        type="text"
+        placeholder="Financial Year 2026-2027"
+      />
+    </div>
+
+
+    <!-- Date & Time -->
+    <div class="date-time">
+
+      <i class="bi bi-calendar3"></i>
+
+      <div class="date-text">
+        <span class="today">Today</span>
+         <span>{{ currentDate | date:'dd MMM yyyy, hh:mm a' }}</span>
+      </div>
+
+    </div>
+
+
+    <!-- Profile -->
+    <!-- Admin Profile -->
+<div class="profile-section" routerLink="/login" role="button">
+
+  <div class="profile-icon">
+    <i class="bi bi-person-fill"></i>
+  </div>
+
+   <span class="admin-name" routerLink="/login">Login</span>
+
+  <i class="bi bi-chevron-down profile-arrow"></i>
+
+
+
+  </div>
+
+  <!-- Login Popup -->
+
+
+    <!-- Login Body -->
+  
+
+  </div>
+
+</header>

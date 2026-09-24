@@ -1,0 +1,228 @@
+/* =========================================
+   DEPARTMENT LIST
+   Bihar Government Theme
+   ========================================= */
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.department-list-container {
+  width: 100%;
+  min-height: calc(100vh - 125px);
+
+  padding: 8px 10px 30px;
+
+  box-sizing: border-box;
+
+  background: #f8fafc;
+
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+
+/* =========================================
+   PAGE TITLE
+   ========================================= */
+
+.page-title {
+  margin: 0 0 8px;
+
+  text-align: center;
+
+  color: #1676d2;
+
+  font-size: 30px;
+  font-weight: 700;
+
+  text-decoration: underline;
+}
+
+
+/* =========================================
+   TABLE CARD
+   ========================================= */
+
+.table-card {
+  width: 100%;
+
+  background: #fff;
+
+  border: 1px solid #dedede;
+
+  border-radius: 10px;
+
+  padding: 16px 16px 0;
+
+  box-sizing: border-box;
+
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+
+/* =========================================
+   RESPONSIVE TABLE WRAPPER
+   ========================================= */
+
+.table-responsive {
+  width: 100%;
+
+  overflow-x: auto;
+}
+
+
+/* =========================================
+   TABLE
+   ========================================= */
+
+.department-table {
+  width: 100%;
+
+  min-width: 850px;
+
+  border-collapse: collapse;
+
+  table-layout: fixed;
+
+  font-size: 13px;
+}
+
+
+/* =========================================
+   HEADER
+   ========================================= */
+
+.department-table thead th {
+  background: #0d3983;
+
+  color: #fff;
+
+  padding: 10px 9px;
+
+  border-right: 1px solid rgba(255, 255, 255, 0.35);
+
+  border-bottom: 1px solid #0d3983;
+
+  text-align: left;
+
+  font-size: 13px;
+
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================
+   BODY
+   ========================================= */
+
+.department-table tbody td {
+  padding: 10px 9px;
+
+  color: #111;
+
+  border-right: 1px solid #ddd;
+
+  border-bottom: 1px solid #ddd;
+
+  vertical-align: middle;
+
+  line-height: 1.3;
+}
+
+
+/* Alternate row */
+
+.department-table tbody tr:nth-child(even) {
+  background: #f0f0f0;
+}
+
+.department-table tbody tr:nth-child(odd) {
+  background: #fff;
+}
+
+
+/* Hover */
+
+.department-table tbody tr:hover:not(.highlight-row) {
+  background: #eaf3fb;
+}
+
+
+/* =========================================
+   RED HIGHLIGHT ROW
+   ========================================= */
+
+.department-table tbody tr.highlight-row td {
+  background: #ff0000;
+
+  color: #000;
+
+  border-color: #fff;
+}
+
+
+/* =========================================
+   COLUMN WIDTH
+   ========================================= */
+
+.department-table th:nth-child(1),
+.department-table td:nth-child(1) {
+  width: 130px;
+
+  text-align: left;
+}
+
+
+.department-table th:nth-child(2),
+.department-table td:nth-child(2) {
+  width: 52%;
+}
+
+
+.department-table th:nth-child(3),
+.department-table td:nth-child(3) {
+  width: 28%;
+}
+
+
+.department-table th:nth-child(4),
+.department-table td:nth-child(4) {
+  width: 14%;
+}
+
+
+/* =========================================
+   EMAIL
+   ========================================= */
+
+.department-table td:nth-child(3) {
+  word-break: break-word;
+}
+
+
+/* =========================================
+   MOBILE
+   ========================================= */
+
+@media (max-width: 768px) {
+
+  .department-list-container {
+    padding: 8px;
+  }
+
+  .page-title {
+    font-size: 25px;
+  }
+
+  .table-card {
+    padding: 10px 10px 0;
+  }
+
+  .department-table {
+    min-width: 800px;
+  }
+}

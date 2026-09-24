@@ -1,0 +1,72 @@
+<div class="scheme-page">
+
+  <!-- Page Heading -->
+  <div class="page-header">
+    <a href="javascript:void(0)" class="scheme-title">
+      Department CSS and State Scheme List
+    </a>
+  </div>
+
+  <!-- Loading -->
+  <div class="loading-box" *ngIf="isLoading">
+    Loading scheme list...
+  </div>
+
+  <!-- No Data -->
+  <div class="no-data" *ngIf="!isLoading && schemeList.length === 0">
+    No scheme data found.
+  </div>
+
+  <!-- Scheme Table -->
+<div class="table-wrapper" *ngIf="!isLoading && schemeList.length > 0">
+
+  <table class="scheme-table">
+
+    <thead>
+      <tr>
+        <th class="serial-col">Serial No.</th>
+        <th>Department</th>
+        <th>Centrally Sponsored Scheme Name</th>
+        <th>Scheme Code</th>
+        <th>Scheme Type</th>
+        <th>Transfer Type</th>
+      </tr>
+    </thead>
+
+    <tbody>
+
+      <tr *ngFor="let item of schemeList; let i = index">
+
+        <td class="serial-col">
+          {{ i + 1 }}
+        </td>
+
+        <td>
+          {{ item.department_Name }}
+        </td>
+
+        <td class="scheme-name">
+          {{ item.schemeName }}
+        </td>
+
+        <!-- <td>
+          {{ item.schemeCode?.trim() }}
+        </td> -->
+
+        <td>
+          {{ item.schemeType }}
+        </td>
+
+        <td>
+          {{ item.transferType }}
+        </td>
+
+      </tr>
+
+    </tbody>
+
+  </table>
+
+</div>
+
+</div>

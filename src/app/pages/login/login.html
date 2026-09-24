@@ -1,0 +1,143 @@
+
+<div class="login-page">
+
+  <div class="login-card">
+
+    <!-- Login Header -->
+    <div class="login-card-header">
+      <div class="login-logo">
+        <i class="bi bi-shield-lock-fill"></i>
+      </div>
+
+      <h2>Admin Login</h2>
+      <p>Direct Benefit Transfer</p>
+      <span>Finance Department, Government of Bihar</span>
+    </div>
+
+    <!-- Login Form -->
+    <form #loginForm="ngForm" (ngSubmit)="onLogin()">
+
+      <!-- User ID -->
+      <div class="form-group">
+        <label for="userid">User ID</label>
+
+        <div class="input-wrapper">
+          <i class="bi bi-person"></i>
+
+          <input
+            type="text"
+            id="userid"
+            name="userid"
+            [(ngModel)]="UserId"
+            placeholder="Enter your user ID"
+            autocomplete="username"
+            required
+          />
+        </div>
+      </div>
+
+      <!-- Password -->
+      <div class="form-group">
+        <label for="password">Password</label>
+
+        <div class="input-wrapper">
+          <i class="bi bi-lock"></i>
+
+          <input
+            [type]="showPassword ? 'text' : 'password'"
+            id="password"
+            name="password"
+            [(ngModel)]="Password"
+            placeholder="Enter your password"
+            autocomplete="current-password"
+            required
+          />
+
+          <button
+            type="button"
+            class="password-toggle"
+            (click)="showPassword = !showPassword"
+            [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'"
+          >
+            <i [class]="showPassword ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
+          </button>
+        </div>
+      </div>
+
+      
+<!-- Character CAPTCHA -->
+<div class="form-group captcha-group">
+
+  <label for="captchaInput">Security Verification</label>
+
+  <div class="captcha-row">
+
+    <!-- CAPTCHA characters -->
+    <div class="captcha-text">
+      {{ captchaText }}
+    </div>
+
+    <!-- Refresh CAPTCHA -->
+    <button
+      type="button"
+      class="captcha-refresh"
+      (click)="generateCaptcha()"
+      aria-label="Refresh CAPTCHA"
+      title="Refresh CAPTCHA"
+    >
+      <i class="bi bi-arrow-clockwise"></i>
+    </button>
+
+  </div>
+
+  <!-- Enter CAPTCHA -->
+  <div class="input-wrapper captcha-input-wrapper">
+    <i class="bi bi-shield-check"></i>
+
+    <input
+      type="text"
+      id="captchaInput"
+      name="captchaInput"
+      [(ngModel)]="captchaInput"
+      placeholder="Enter the characters shown above"
+      autocomplete="off"
+      maxlength="5"
+      required
+    />
+  </div>
+
+</div>
+
+      <!-- Error Message -->
+      @if (errorMessage) {
+        <div class="error-message" role="alert">
+          <i class="bi bi-exclamation-circle"></i>
+          {{ errorMessage }}
+        </div>
+      }
+
+      <!-- Submit Button -->
+      <button
+        type="submit"
+        class="login-button"
+        [disabled]="loginForm.invalid || isLoading"
+      >
+        @if (isLoading) {
+          <span class="spinner"></span>
+          <span>Signing in...</span>
+        } @else {
+          <i class="bi bi-box-arrow-in-right"></i>
+          <span>Sign In</span>
+        }
+      </button>
+
+    </form>
+
+    <div class="login-footer">
+      <i class="bi bi-shield-check"></i>
+      Secure Admin Access
+    </div>
+
+  </div>
+
+</div>

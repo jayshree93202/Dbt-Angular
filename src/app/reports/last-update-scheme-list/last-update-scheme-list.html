@@ -1,0 +1,128 @@
+<div class="scheme-page">
+
+  <!-- Page Title -->
+  <div class="page-title">
+    <h2>Last Updated Scheme Report</h2>
+  </div>
+
+  <!-- Search Section -->
+  <div class="search-section">
+
+    <!-- Department -->
+    <div class="filter-item department-filter">
+      <label for="department">Department</label>
+
+      <select
+        id="department"
+        class="form-control"
+        [(ngModel)]="selectedDepartment"
+        (change)="onDepartmentChange()">
+
+        <option value="">--All--</option>
+
+        <option
+          *ngFor="let department of departments"
+          [value]="department" (change)="onFilterChange()">
+          {{ department }}
+        </option>
+
+      </select>
+    </div>
+
+
+    <!-- Scheme -->
+    <div class="filter-item scheme-filter">
+      <label for="scheme">Scheme</label>
+
+      <select
+        id="scheme"
+        class="form-control"
+        [(ngModel)]="selectedScheme"
+        (change)="onFilterChange()">
+
+        <option value="">--All--</option>
+
+        <option
+          *ngFor="let scheme of filteredSchemes"
+          [value]="scheme">
+          {{ scheme }}
+        </option>
+
+      </select>
+    </div>
+
+
+    <!-- Search -->
+    <div class="search-btn-wrapper">
+      <button
+        type="button"
+        class="btn-search"
+        (click)="searchScheme()">
+        Search
+      </button>
+    </div>
+
+  </div>
+
+
+  <!-- Table Card -->
+  <div class="table-card">
+
+    <!-- Download -->
+    <div class="table-header">
+      <button
+        type="button"
+        class="btn-download"
+        >
+        Download Excel
+      </button>
+    </div>
+
+
+    <!-- Table -->
+    <div class="table-responsive">
+
+      <table class="scheme-table">
+
+        <thead>
+          <tr>
+            <th>Department Name</th>
+            <th>Scheme Name</th>
+            <th>Scheme Last Updated Date</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+          <tr *ngFor="let item of filteredSchemeList">
+
+            <td>
+              {{ item.DepartmentName }}
+            </td>
+
+            <td>
+              {{ item.SchemeName }}
+            </td>
+
+            <td>
+              {{ item.SchemeLastUpdatedDate }}
+            </td>
+
+          </tr>
+
+
+          <tr *ngIf="filteredSchemeList.length === 0">
+            <td colspan="3" class="no-data">
+              No Record Found
+            </td>
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</div>

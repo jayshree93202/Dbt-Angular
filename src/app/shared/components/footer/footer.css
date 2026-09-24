@@ -1,0 +1,73 @@
+/* ========================================
+   FOOTER
+======================================== */
+
+.footer {
+  min-height: 58px;
+
+  background: #ffffff;
+
+  border-top: 1px solid #dfe5ec;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 25px;
+
+  color: #5f6b7a;
+
+  font-size: 13px;
+}
+
+.footer-left {
+  white-space: nowrap;
+}
+
+.footer-right {
+  display: flex;
+  align-items: center;
+
+  gap: 5px;
+
+  white-space: nowrap;
+}
+
+.footer-right strong {
+  color: #06499b;
+
+  font-weight: 600;
+}
+
+.footer-nic-logo {
+  height: 28px;
+  width: auto;
+  margin: 0 4px;
+  object-fit: contain;
+}
+
+
+/* ========================================
+   RESPONSIVE
+======================================== */
+
+@media (max-width: 768px) {
+
+  .footer {
+    min-height: auto;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    gap: 7px;
+
+    padding: 15px;
+
+    text-align: center;
+  }
+
+}
+.footer-nic-logo[_ngcontent-ng-c3704917115] {
+    height: 60px;
+}

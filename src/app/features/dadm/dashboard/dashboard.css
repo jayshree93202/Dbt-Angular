@@ -1,0 +1,1443 @@
+/* =====================================================
+   DASHBOARD PAGE
+===================================================== */
+
+.dashboard-page {
+  width: 100%;
+  min-height: 100vh;
+  padding: 20px;
+
+  background: #f4f7fb;
+  color: #1a365d;
+
+  font-family:
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    sans-serif;
+}
+
+
+/* =====================================================
+   HERO BANNER
+===================================================== */
+
+.dashboard-hero {
+  position: relative;
+
+  width: 100%;
+  height: 180px;
+
+  margin-bottom: 16px;
+
+  overflow: hidden;
+
+  border-radius: 12px;
+
+  background: #d9eaf8;
+
+  border: 1px solid #b8d2e8;
+
+  box-shadow:
+    0 4px 14px rgba(20, 74, 124, 0.12);
+}
+
+
+/* =====================================================
+   GOVERNMENT BUILDING BACKGROUND
+===================================================== */
+
+.hero-building {
+  position: absolute;
+
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  background-image:
+    url("/assets/biharlogo.png");
+
+  background-repeat: no-repeat;
+
+  background-position: center center;
+
+  background-size: cover;
+
+  opacity: 0.65;
+
+  z-index: 1;
+}
+
+
+/* =====================================================
+   HERO LIGHT OVERLAY
+===================================================== */
+
+.hero-overlay {
+  position: absolute;
+
+  inset: 0;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(229, 240, 249, 0.96) 0%,
+      rgba(221, 235, 247, 0.88) 35%,
+      rgba(194, 220, 240, 0.48) 65%,
+      rgba(164, 204, 235, 0.20) 100%
+    );
+
+  z-index: 2;
+}
+
+
+/* =====================================================
+   RIGHT SIDE CURVED BACKGROUND
+
+   IMPORTANT:
+
+   width: 500px → CHANGE THIS TO REDUCE/INCREASE WIDTH
+
+   right: -80px → CHANGE THIS TO MOVE THE SHAPE
+                  LEFT OR RIGHT
+
+===================================================== */
+
+.dashboard-hero::before {
+  content: "";
+
+  position: absolute;
+
+  width: 500px; /* ← REDUCE/INCREASE BACKGROUND WIDTH HERE */
+  height: 320px;
+
+  right: -80px; /* ← MOVE BACKGROUND LEFT/RIGHT HERE */
+  top: -70px;
+
+  border-radius: 50%;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(49, 127, 194, 0.82) 0%,
+      rgba(35, 110, 180, 0.72) 55%,
+      rgba(63, 145, 210, 0.58) 100%
+    );
+
+  z-index: 3;
+
+  pointer-events: none;
+}
+
+
+/* =====================================================
+   SECOND SOFT CURVED LAYER
+===================================================== */
+
+.dashboard-hero::after {
+  content: "";
+
+  position: absolute;
+
+  width: 420px;
+  height: 270px;
+
+  right: -60px;
+  top: -45px;
+
+  border-radius: 50%;
+
+  background:
+    rgba(255, 255, 255, 0.08);
+
+  border:
+    1px solid rgba(255, 255, 255, 0.12);
+
+  z-index: 4;
+
+  pointer-events: none;
+}
+
+
+/* =====================================================
+   HERO CONTENT
+===================================================== */
+
+.hero-content {
+  position: relative;
+
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+
+  align-items: center;
+
+  padding: 18px 24px;
+
+  z-index: 5;
+}
+
+
+/* =====================================================
+   LEFT CONTENT
+===================================================== */
+
+.hero-left {
+  position: relative;
+
+  width: 42%;
+
+  min-width: 360px;
+
+  z-index: 8;
+}
+
+
+.government-label {
+  display: block;
+
+  margin-bottom: 2px;
+
+  font-size: 16px;
+
+  font-weight: 600;
+
+  color: #294d76;
+}
+
+
+/* =====================================================
+   HERO HEADING
+===================================================== */
+
+.hero-left h1 {
+  margin: 0;
+
+  font-size: 32px;
+
+  line-height: 1.2;
+
+  font-weight: 700;
+
+  color: #173f70;
+
+  letter-spacing: 0.2px;
+}
+
+
+/* =====================================================
+   HERO TAGLINE
+===================================================== */
+
+.hero-tagline {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  margin-top: 4px;
+
+  font-size: 17px;
+
+  font-weight: 500;
+
+  color: #22578e;
+}
+
+
+.tag-dot {
+  font-size: 19px;
+
+  color: #0c4d8d;
+}
+
+
+/* =====================================================
+   HERO LINE
+===================================================== */
+
+.hero-line {
+  width: 100%;
+
+  max-width: 380px;
+
+  height: 1px;
+
+  margin: 9px 0;
+
+  background:
+    linear-gradient(
+      90deg,
+      #739ec6 0%,
+      rgba(115, 158, 198, 0.25) 100%
+    );
+}
+
+
+/* =====================================================
+   HERO DESCRIPTION
+===================================================== */
+
+.hero-left p {
+  margin: 0;
+
+  max-width: 400px;
+
+  font-size: 14px;
+
+  line-height: 1.5;
+
+  color: #294b6e;
+}
+
+
+/* =====================================================
+   BIHAR MAP
+===================================================== */
+
+.hero-map-graphic {
+  position: absolute;
+
+  left: 42%;
+
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  width: 190px;
+
+  height: 130px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  z-index: 6;
+
+  pointer-events: none;
+}
+
+
+.hero-map-graphic img {
+  width: 100%;
+
+  height: 100%;
+
+  object-fit: contain;
+
+  display: block;
+
+  filter:
+    drop-shadow(
+      0 3px 5px
+      rgba(11, 53, 99, 0.18)
+    );
+}
+
+
+/* =====================================================
+   BENEFICIARY CARD
+===================================================== */
+
+.beneficiary-card {
+  position: absolute;
+
+  right: 18px;
+
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  width: 305px;
+
+  min-height: 120px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 16px;
+
+  padding: 16px 18px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.96) 0%,
+      rgba(244, 249, 253, 0.95) 55%,
+      rgba(230, 241, 250, 0.95) 100%
+    );
+
+  border:
+    1px solid rgba(255, 255, 255, 0.88);
+
+  border-radius: 10px;
+
+  box-shadow:
+    0 5px 16px rgba(16, 65, 111, 0.20);
+
+  z-index: 10;
+}
+
+
+/* =====================================================
+   BENEFICIARY ICON
+===================================================== */
+
+.beneficiary-icon {
+  width: 58px;
+
+  height: 58px;
+
+  min-width: 58px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background:
+    linear-gradient(
+      135deg,
+      #2965a3,
+      #17477d
+    );
+
+  color: #ffffff;
+
+  font-size: 25px;
+
+  box-shadow:
+    0 4px 10px rgba(20, 65, 110, 0.25);
+}
+
+
+/* =====================================================
+   BENEFICIARY INFO
+===================================================== */
+
+.beneficiary-info {
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+}
+
+
+.beneficiary-title {
+  font-size: 14px;
+
+  font-weight: 600;
+
+  color: #29496f;
+}
+
+
+.beneficiary-info h2 {
+  margin: 4px 0 7px;
+
+  font-size: 26px;
+
+  line-height: 1.1;
+
+  font-weight: 700;
+
+  letter-spacing: 0.8px;
+
+  color: #173f70;
+}
+
+
+/* =====================================================
+   BENEFICIARY GROWTH
+===================================================== */
+
+.beneficiary-growth {
+  display: flex;
+
+  align-items: center;
+
+  gap: 20px;
+
+  font-size: 11px;
+
+  white-space: nowrap;
+}
+
+
+.growth {
+  display: flex;
+
+  align-items: center;
+
+  gap: 3px;
+
+  font-weight: 600;
+
+  color: #16804a;
+}
+
+
+.growth i {
+  font-size: 13px;
+}
+
+
+.last-year {
+  color: #38516b;
+}
+
+
+/* =====================================================
+   5 STATISTIC CARDS
+===================================================== */
+
+.stats-grid {
+  display: grid;
+
+  grid-template-columns: repeat(5, 1fr);
+
+  gap: 16px;
+
+  margin-bottom: 20px;
+}
+
+
+.stat-card {
+  position: relative;
+
+  min-height: 130px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 14px;
+
+  padding: 16px;
+
+  overflow: hidden;
+
+  background: #ffffff;
+
+  border: 1px solid #d7e2ee;
+
+  border-radius: 12px;
+
+  box-shadow:
+    0 4px 14px rgba(13, 58, 102, 0.06);
+
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease;
+}
+
+
+.stat-card:hover {
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 10px 24px rgba(15, 23, 42, 0.10);
+}
+
+
+/* =====================================================
+   STAT ICON
+===================================================== */
+
+.stat-icon-wrapper {
+  position: relative;
+
+  width: 52px;
+  height: 52px;
+
+  min-width: 52px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+}
+
+
+.stat-icon-halo {
+  position: absolute;
+
+  width: 64px;
+  height: 64px;
+
+  border-radius: 50%;
+
+  opacity: 0.20;
+
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease;
+}
+
+
+.stat-card:hover .stat-icon-halo {
+  opacity: 0.35;
+
+  transform: scale(1.08);
+}
+
+
+.stat-icon-badge {
+  position: relative;
+
+  z-index: 2;
+
+  width: 48px;
+  height: 48px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border-radius: 50%;
+
+  color: #ffffff;
+
+  font-size: 22px;
+
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+
+/* =====================================================
+   STAT CARD COLORS
+===================================================== */
+
+.card-department {
+  border-left: 4px solid #1e40af;
+}
+
+.card-department .stat-icon-badge {
+  background: #1e40af;
+}
+
+.card-department .stat-icon-halo {
+  background: #3b82f6;
+}
+
+
+.card-schemes {
+  border-left: 4px solid #0d9488;
+}
+
+.card-schemes .stat-icon-badge {
+  background: #0d9488;
+}
+
+.card-schemes .stat-icon-halo {
+  background: #14b8a6;
+}
+
+
+.card-dbt {
+  border-left: 4px solid #dc2626;
+}
+
+.card-dbt .stat-icon-badge {
+  background: #dc2626;
+}
+
+.card-dbt .stat-icon-halo {
+  background: #f87171;
+}
+
+
+.card-reported {
+  border-left: 4px solid #7c3aed;
+}
+
+.card-reported .stat-icon-badge {
+  background: #7c3aed;
+}
+
+.card-reported .stat-icon-halo {
+  background: #a78bfa;
+}
+
+
+.card-report-scheme {
+  border-left: 4px solid #d97706;
+}
+
+.card-report-scheme .stat-icon-badge {
+  background: #d97706;
+}
+
+.card-report-scheme .stat-icon-halo {
+  background: #fbbf24;
+}
+
+
+/* =====================================================
+   STAT CONTENT
+===================================================== */
+
+.stat-content {
+  flex: 1;
+
+  min-width: 0;
+
+  display: flex;
+
+  flex-direction: column;
+}
+
+
+.stat-title {
+  font-size: 13px;
+
+  font-weight: 600;
+
+  line-height: 1.35;
+
+  color: #334155;
+}
+
+
+.stat-fy {
+  margin-top: 1px;
+
+  font-size: 11px;
+
+  font-weight: 500;
+
+  color: #64748b;
+}
+
+
+.stat-value {
+  margin: 4px 0;
+
+  font-size: 20px;
+
+  font-weight: 800;
+
+  letter-spacing: -0.3px;
+
+  white-space: nowrap;
+
+  color: #0f172a;
+}
+
+
+.stat-growth {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 3px;
+
+  margin-bottom: 2px;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  color: #16a34a;
+}
+
+
+.stat-growth span {
+  margin-left: 2px;
+
+  font-weight: 400;
+
+  color: #64748b;
+}
+
+
+.view-details {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 4px;
+
+  margin-top: 4px;
+
+  color: #2563eb;
+
+  font-size: 12px;
+
+  font-weight: 600;
+
+  text-decoration: none;
+
+  cursor: pointer;
+
+  transition:
+    gap 0.2s ease,
+    color 0.2s ease;
+}
+
+
+.view-details:hover {
+  gap: 8px;
+
+  color: #1d4ed8;
+}
+
+
+.red-title {
+  color: #dc2626;
+}
+
+
+/* =====================================================
+   COMMON DASHBOARD CARD
+===================================================== */
+
+.dashboard-card {
+  overflow: hidden;
+
+  background: #ffffff;
+
+  border: 1px solid #d7e2ee;
+
+  border-radius: 12px;
+
+  box-shadow:
+    0 4px 14px rgba(13, 58, 102, 0.05);
+}
+
+
+/* =====================================================
+   CARD HEADER
+===================================================== */
+
+.card-header {
+  min-height: 56px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  padding: 12px 20px;
+
+  border-bottom: 1px solid #e2eaf2;
+
+  background: #ffffff;
+}
+
+
+.card-title {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+}
+
+
+.title-icon {
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #e8f1fb;
+
+  color: #1d4ed8;
+
+  font-size: 16px;
+}
+
+
+.card-title h5 {
+  margin: 0;
+
+  font-size: 15px;
+
+  font-weight: 700;
+
+  color: #1e293b;
+}
+
+
+/* =====================================================
+   FILTER BUTTON
+===================================================== */
+
+.filter-btn {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  padding: 6px 12px;
+
+  background: #f8fafc;
+
+  border: 1px solid #cbd5e1;
+
+  border-radius: 6px;
+
+  color: #334155;
+
+  font-size: 12px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: background 0.2s ease;
+}
+
+
+.filter-btn:hover {
+  background: #e2e8f0;
+}
+
+
+/* =====================================================
+   DASHBOARD GRIDS
+===================================================== */
+
+.top-dashboard-grid {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 20px;
+
+  margin-bottom: 20px;
+}
+
+
+.bottom-dashboard-grid {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 20px;
+
+  margin-bottom: 20px;
+}
+
+
+/* =====================================================
+   HIGHCHARTS WRAPPER
+===================================================== */
+
+.chart-wrapper {
+  width: 100%;
+
+  min-height: 330px;
+
+  padding: 10px 6px;
+
+  display: block;
+}
+
+
+.chart-wrapper highcharts-chart {
+  display: block;
+
+  width: 100%;
+}
+
+
+/* =====================================================
+   DEPARTMENT MARQUEE CARD
+===================================================== */
+
+.department-card {
+  height: 406px;
+
+  display: flex;
+
+  flex-direction: column;
+}
+
+
+.department-marquee-container {
+  position: relative;
+
+  flex: 1;
+
+  overflow: hidden;
+
+  background: #ffffff;
+}
+
+
+/* TOP AND BOTTOM FADE EFFECT */
+
+.department-marquee-container::before,
+.department-marquee-container::after {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  right: 0;
+
+  height: 30px;
+
+  z-index: 2;
+
+  pointer-events: none;
+}
+
+
+.department-marquee-container::before {
+  top: 0;
+
+  background:
+    linear-gradient(
+      to bottom,
+      #ffffff,
+      rgba(255, 255, 255, 0)
+    );
+}
+
+
+.department-marquee-container::after {
+  bottom: 0;
+
+  background:
+    linear-gradient(
+      to top,
+      #ffffff,
+      rgba(255, 255, 255, 0)
+    );
+}
+
+
+/* =====================================================
+   MARQUEE ANIMATION
+===================================================== */
+
+.department-marquee {
+  list-style: none;
+
+  margin: 0;
+
+  padding: 0;
+
+  animation:
+    marqueeUp 24s linear infinite;
+}
+
+
+/* PAUSE ON HOVER */
+
+.department-marquee-container:hover .department-marquee {
+  animation-play-state: paused;
+}
+
+
+@keyframes marqueeUp {
+
+  0% {
+    transform: translateY(0);
+  }
+
+  100% {
+    transform: translateY(-50%);
+  }
+
+}
+
+
+/* =====================================================
+   DEPARTMENT LIST ITEM
+===================================================== */
+
+.department-marquee li {
+  min-height: 54px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  padding: 10px 20px;
+
+  border-bottom: 1px solid #edf2f7;
+
+  transition: background 0.2s ease;
+}
+
+
+.department-marquee li:hover {
+  background: #f6fafe;
+}
+
+
+.department-left {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  color: #1e293b;
+
+  font-size: 13.5px;
+
+  font-weight: 600;
+}
+
+
+.department-icon {
+  width: 34px;
+  height: 34px;
+
+  flex-shrink: 0;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #edf4fb;
+
+  color: #1d4ed8;
+
+  font-size: 15px;
+}
+
+
+.scheme-count {
+  padding: 4px 10px;
+
+  border-radius: 20px;
+
+  background: #e0f2fe;
+
+  color: #0369a1;
+
+  font-size: 12px;
+
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+
+/* =====================================================
+   RESPONSIVE DESIGN
+===================================================== */
+
+
+/* LARGE LAPTOP */
+
+@media (max-width: 1400px) {
+
+  .stats-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+}
+
+/* oval backgroud beneficiary */
+/* TABLET / SMALL LAPTOP */
+
+@media (max-width: 1200px) {
+
+  .dashboard-hero::before {
+    width: 440px;
+
+    height: 300px;
+
+    right: -100px;
+  }
+
+
+  .dashboard-hero::after {
+    width: 370px;
+
+    height: 250px;
+
+    right: -70px;
+  }
+
+
+  .hero-map-graphic {
+    left: 40%;
+
+    width: 160px;
+  }
+
+
+  .beneficiary-card {
+    width: 280px;
+  }
+
+
+  .hero-left h1 {
+    font-size: 29px;
+  }
+
+}
+
+
+/* TABLET */
+
+@media (max-width: 1100px) {
+
+  .top-dashboard-grid,
+  .bottom-dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+}
+
+
+/* MOBILE / SMALL TABLET */
+
+@media (max-width: 900px) {
+
+  .dashboard-hero {
+    height: auto;
+
+    min-height: 300px;
+  }
+
+
+  .dashboard-hero::before {
+    width: 480px;
+
+    height: 380px;
+
+    right: -250px;
+
+    top: -40px;
+  }
+
+
+  .dashboard-hero::after {
+    display: none;
+  }
+
+
+  .hero-content {
+    min-height: 300px;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    justify-content: center;
+
+    gap: 20px;
+  }
+
+
+  .hero-left {
+    width: 100%;
+
+    min-width: 0;
+  }
+
+
+  .hero-map-graphic {
+    left: auto;
+
+    right: 40px;
+
+    top: 30px;
+
+    transform: none;
+
+    width: 150px;
+
+    opacity: 0.4;
+  }
+
+
+  .beneficiary-card {
+    position: relative;
+
+    right: auto;
+
+    top: auto;
+
+    transform: none;
+
+    width: 100%;
+
+    max-width: 320px;
+  }
+
+}
+
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+  .dashboard-page {
+    padding: 12px;
+  }
+
+
+  .hero-content {
+    padding: 18px;
+  }
+
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+
+  .hero-left h1 {
+    font-size: 25px;
+  }
+
+
+  .government-label {
+    font-size: 14px;
+  }
+
+
+  .hero-tagline {
+    flex-wrap: wrap;
+
+    font-size: 14px;
+
+    gap: 5px;
+  }
+
+
+  .hero-left p {
+    font-size: 13px;
+  }
+
+
+  .hero-map-graphic {
+    width: 110px;
+
+    height: 80px;
+
+    right: 15px;
+
+    opacity: 0.25;
+  }
+
+
+  .beneficiary-card {
+    width: 100%;
+
+    padding: 15px;
+  }
+
+
+  .beneficiary-info h2 {
+    font-size: 23px;
+  }
+
+
+  .card-header {
+    padding: 12px 14px;
+  }
+
+
+  .department-marquee li {
+    padding: 10px 14px;
+  }
+
+}
+
+
+/* charts download icon css */
+.chart-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+
+.chart-download-btn {
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid #cbddeb;
+  border-radius: 6px;
+
+  background: #f8fbff;
+
+  color: #1d5fa7;
+
+  font-size: 15px;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+
+.chart-download-btn:hover {
+  background: #eaf3fc;
+
+  border-color: #9fc0df;
+
+  transform: translateY(-1px);
+}
+
+
+.chart-download-btn:active {
+  transform: translateY(0);
+}
+
+
+.hero-map-graphic[_ngcontent-ng-c1438052854] {
+    position: absolute;
+    left: 54%;
+    top: 51%;
+}
+.stat-title[_ngcontent-ng-c1438052854] {
+    font-size: 16px;
+}
+.stat-fy[_ngcontent-ng-c1438052854] {
+    
+    font-size: 15px;
+}
