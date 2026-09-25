@@ -86,6 +86,13 @@ export const routes: Routes = [
     component: LoginComponent
   },
 
+  // {
+  //   path: 'admin-dashboard',
+  //   loadComponent: () =>
+  //     import('./dashboard/admin-dashboard/admin-dashboard')
+  //       .then(m => m.AdminDashboardComponent)
+  // },
+
 
 
 ];

@@ -7,6 +7,7 @@ import type * as Highcharts from 'highcharts';
 import { HighchartsChartComponent } from 'highcharts-angular';
 
 import { DashboardService } from '../../../core/services/dashboard';
+import { RouterLink } from '@angular/router';
 
 
 
@@ -76,7 +77,7 @@ export interface DepartmentSchemeChart {
   selector: 'app-dashboard',
 
   imports: [
-    CommonModule,
+    CommonModule,RouterLink,
     HighchartsChartComponent
   ],
 

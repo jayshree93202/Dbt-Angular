@@ -44,6 +44,11 @@ const SESSION_KEY_STORAGE = 'iswms_session_key_v1';
 
 @Injectable({ providedIn: 'root' })
 export class EncryptionService {
+  decrypt(encryptedRoleId: string | undefined) {
+    throw new Error('Method not implemented.');
+  }
+
+  
   private readonly http = inject(HttpClient);
   private readonly baseUrl = API_BASE_URL;
 
