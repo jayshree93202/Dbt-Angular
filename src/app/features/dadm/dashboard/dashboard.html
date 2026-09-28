@@ -1,5 +1,7 @@
 <div class="dashboard-page">
 
+  <div *ngIf="isPublic()">
+
   <!-- ===================================== -->
   <!-- HERO BANNER SECTION -->
   <!-- ===================================== -->
@@ -481,7 +483,38 @@
   <!-- ===================================== -->
   <!-- ROW 4: RECENT SCHEMES TABLE + QUICK LINKS -->
   <!-- ===================================== -->
+</div>
 
+<!-- ========================================== -->
+<!-- SADM DASHBOARD -->
+<!-- ========================================== -->
+
+<div *ngIf="isSadm()" class="dashboard-page">
+
+  <section class="dashboard-hero">
+
+    <div class="hero-content">
+
+      <h1>SADM Dashboard</h1>
+
+      <p>
+        Welcome to State Administrator Dashboard
+      </p>
+
+    </div>
+
+  </section>
+
+  <div class="dashboard-content">
+
+    <div class="stat-card">
+      <h3>Logged In User</h3>
+      <h2>{{ roleId }}</h2>
+    </div>
+
+  </div>
+
+</div>
 
 
 </div>

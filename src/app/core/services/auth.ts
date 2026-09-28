@@ -30,6 +30,11 @@ export class AuthService {
 
   private readonly apiUrl = API_BASE_URL;
 
+
+  getRoleId(): string {
+  return localStorage.getItem('RoleId')?.trim().toUpperCase() || '';
+}
+
   login(credentials: EncryptedLoginPayload): Observable<LoginResponse> {
 
     return this.http

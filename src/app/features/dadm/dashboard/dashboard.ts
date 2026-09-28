@@ -5,10 +5,10 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 import type * as Highcharts from 'highcharts';
 import { HighchartsChartComponent } from 'highcharts-angular';
-
-import { DashboardService } from '../../../core/services/dashboard';
 import { RouterLink } from '@angular/router';
 
+import { DashboardService } from '../../../core/services/dashboard';
+import { AuthService } from '../../../core/services/auth';
 
 
 // ======================================================
@@ -88,36 +88,19 @@ export interface DepartmentSchemeChart {
 
 export class Dashboard implements OnInit {
 
-  // ======================================================
-  // DASHBOARD COUNTS
-  // ======================================================
  fYearId: number = 0;
   totalDepartment: number = 0;
-
   totalScheme: number = 0;
-
   totalPayDepartment: number = 0;
-
   totalPayScheme: number = 0;
-
   totalDBT: string = '₹ 0 Cr';
-
   currentFY: string = '';
-
-
-  // ======================================================
-  // DEPARTMENT LIST
-  // ======================================================
+  roleId: string = '';
 
   departments: DepartmentSchemeChart[] = [];
 
 
-  // ======================================================
-  // CHART FLAGS
-  // ======================================================
-
   fundTransferChartReady = false;
-
   fundTransferUpdateFlag = false;
 
 
@@ -614,7 +597,8 @@ export class Dashboard implements OnInit {
 
   constructor(
     private dashboardService: DashboardService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private authService: AuthService
   ) {}
 
 
@@ -622,23 +606,108 @@ export class Dashboard implements OnInit {
   // NG ON INIT
   // ======================================================
 
+  // ngOnInit(): void {
+
+  //   console.log('Dashboard initialized');
+
+  //   // API calls
+  //   this.loadDashboardCount();
+
+  //   this.loadTotalScheme();
+
+  //   this.loadFundTransferChart();
+
+  //   this.loadBeneficiaryChart();
+
+  //   this.loadDepartmentWiseSchemes();
+    
+  //   this.loadCumulativeAmount(this.fYearId);
+  // }
+
   ngOnInit(): void {
 
-    console.log('Dashboard initialized');
+  console.log('Dashboard initialized');
 
-    // API calls
-    this.loadDashboardCount();
+  this.roleId = this.authService.getRoleId().trim().toUpperCase();
 
-    this.loadTotalScheme();
-
-    this.loadFundTransferChart();
-
-    this.loadBeneficiaryChart();
-
-    this.loadDepartmentWiseSchemes();
-    
-    this.loadCumulativeAmount(this.fYearId);
+  if (!this.roleId) 
+    {
+    this.loadPublicDashboard();
+    return;
   }
+
+  console.log('================================');
+  console.log('Dashboard RoleId:', this.roleId);
+  console.log('LocalStorage RoleId:', localStorage.getItem('RoleId'));
+  console.log('LocalStorage UserId:', localStorage.getItem('UserId'));
+  console.log('================================');
+
+  this.loadDashboardByRole();
+}
+
+loadDashboardByRole(): void {
+
+   if (!this.roleId) {this.loadPublicDashboard();
+    return;
+  }
+
+  switch (this.roleId) {
+
+    case 'SADM':
+      this.loadSadmDashboard();
+      break;
+
+      case 'DADM':
+        console.log('DADM DASHBOARD');
+        ///this.loadDadmDashboard();
+        break;
+
+    case 'DOPT':
+        console.log('DOPT DASHBOARD');
+        //this.loadDoptDashboard();
+        break;
+
+      case 'HELP':
+        console.log('HELP DASHBOARD');
+        //this.loadHelpDashboard();
+        break;
+
+    default:
+       console.error('Invalid RoleId:', this.roleId);
+      this.loadPublicDashboard();
+      break;
+  }
+}
+
+loadPublicDashboard(): void {
+
+  this.loadDashboardCount();
+
+  this.loadTotalScheme();
+
+  this.loadFundTransferChart();
+
+  this.loadBeneficiaryChart();
+
+  this.loadDepartmentWiseSchemes();
+
+  this.loadCumulativeAmount(this.fYearId);
+}
+
+loadSadmDashboard(): void {
+
+  // this.loadDashboardCount();
+
+  // this.loadTotalScheme();
+
+  // this.loadFundTransferChart();
+
+  // this.loadBeneficiaryChart();
+
+  // this.loadDepartmentWiseSchemes();
+
+  // this.loadCumulativeAmount(this.fYearId);
+}
 
 
   // ======================================================
@@ -1135,6 +1204,17 @@ loadCumulativeAmount(fYearId: string | number): void {debugger
     }
 
   });
+}
+
+isPublic(): boolean {
+  return !this.roleId;
+}
+
+isSadm(): boolean {
+  return this.roleId === 'SADM';
+}
+isLoggedIn(): boolean {
+  return !!this.roleId;
 }
 
 }
