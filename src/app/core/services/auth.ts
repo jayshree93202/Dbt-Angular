@@ -1,4 +1,5 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { API_BASE_URL } from '../api/api.config';
@@ -27,13 +28,17 @@ export class AuthService {
 
   private readonly http = inject(HttpClient);
   private readonly encryption = inject(EncryptionService);
+  private readonly platformId = inject(PLATFORM_ID);
 
   private readonly apiUrl = API_BASE_URL;
 
 
   getRoleId(): string {
-  return localStorage.getItem('RoleId')?.trim().toUpperCase() || '';
-}
+    if (isPlatformBrowser(this.platformId)) {
+      return localStorage.getItem('RoleId')?.trim().toUpperCase() || '';
+    }
+    return '';
+  }
 
   login(credentials: EncryptedLoginPayload): Observable<LoginResponse> {
 
@@ -51,7 +56,9 @@ export class AuthService {
           if (status && token) {
 
             // Store token
-            localStorage.setItem('accessToken', token);
+            if (isPlatformBrowser(this.platformId)) {
+              localStorage.setItem('accessToken', token);
+            }
 
             // Get server AES key
             const serverKey =
@@ -66,18 +73,26 @@ export class AuthService {
   }
 
   isLoggedIn(): boolean {
-    return !!localStorage.getItem('accessToken');
+    if (isPlatformBrowser(this.platformId)) {
+      return !!localStorage.getItem('accessToken');
+    }
+    return false;
   }
 
   getToken(): string | null {
-    return localStorage.getItem('accessToken');
+    if (isPlatformBrowser(this.platformId)) {
+      return localStorage.getItem('accessToken');
+    }
+    return null;
   }
 
   logout(): void {
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('token');
-    localStorage.removeItem('UserId');
-    localStorage.removeItem('RoleId');
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('token');
+      localStorage.removeItem('UserId');
+      localStorage.removeItem('RoleId');
+    }
 
     this.encryption.clearSessionKey();
   }

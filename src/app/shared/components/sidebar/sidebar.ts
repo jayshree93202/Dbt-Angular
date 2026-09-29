@@ -1,6 +1,6 @@
 
-import { Component, inject, Input, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, inject, Input, OnInit, PLATFORM_ID } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import {
   Router,
   RouterLink,
@@ -33,13 +33,16 @@ export class Sidebar implements OnInit {
   userId: string = '';
   reportsOpen: boolean = false;
   actionOpen: boolean = false;
+  private platformId = inject(PLATFORM_ID);
   constructor() {
 
+    if (isPlatformBrowser(this.platformId)) {
       this.userId =
         localStorage.getItem('UserId') || '';
 
       this.roleId =
         localStorage.getItem('RoleId') || '';
+    }
   }
   private authService = inject(AuthService);
   private router = inject(Router);
@@ -74,17 +77,19 @@ export class Sidebar implements OnInit {
 
   loadUserDetails(): void {
 
-    const storedRoleId =
-      localStorage.getItem('RoleId') || '';
+    if (isPlatformBrowser(this.platformId)) {
+      const storedRoleId =
+        localStorage.getItem('RoleId') || '';
 
-    const storedUserId =
-      localStorage.getItem('UserId') || '';
+      const storedUserId =
+        localStorage.getItem('UserId') || '';
 
-    this.roleId =
-      storedRoleId.trim().toUpperCase();
+      this.roleId =
+        storedRoleId.trim().toUpperCase();
 
-    this.userId =
-      storedUserId.trim();
+      this.userId =
+        storedUserId.trim();
+    }
   }
 
   // ==========================================
