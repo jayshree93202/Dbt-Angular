@@ -1,2 +1,2 @@
 
-export const API_BASE_URL: string = 'https://localhost:7192/api/SADM';
+export const API_BASE_URL: string = 'http://localhost:5160/api/SADM';

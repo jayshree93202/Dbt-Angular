@@ -26,7 +26,7 @@ export interface DashboardCount {
 })
 export class DashboardService {
 
-  private apiUrl = `https://localhost:7192/api/DBT`;
+  private apiUrl = `http://localhost:5160/api/DBT`;
 
 
 // 1. FINANCIAL YEAR
