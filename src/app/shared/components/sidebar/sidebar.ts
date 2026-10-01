@@ -1,5 +1,5 @@
 
-import { Component, inject, Input, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component, inject, Input, OnInit, OnDestroy, PLATFORM_ID } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import {
   Router,
@@ -7,6 +7,7 @@ import {
   RouterLinkActive,
   RouterModule
 } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { AuthService } from '../../../core/services/auth';
 
 @Component({
@@ -21,7 +22,7 @@ import { AuthService } from '../../../core/services/auth';
   templateUrl: './sidebar.html',
   styleUrl: './sidebar.css'
 })
-export class Sidebar implements OnInit {
+export class Sidebar implements OnInit, OnDestroy {
 
   @Input() isOpen = true;
 
@@ -34,19 +35,16 @@ export class Sidebar implements OnInit {
   reportsOpen: boolean = false;
   actionOpen: boolean = false;
   private platformId = inject(PLATFORM_ID);
-  constructor() {
-
-    if (isPlatformBrowser(this.platformId)) {
-      this.userId =
-        localStorage.getItem('UserId') || '';
-
-      this.roleId =
-        localStorage.getItem('RoleId') || '';
-    }
-  }
   private authService = inject(AuthService);
   private router = inject(Router);
-  
+  private authSubscription?: Subscription;
+
+  constructor() {
+    if (isPlatformBrowser(this.platformId)) {
+      this.userId = localStorage.getItem('UserId') || '';
+      this.roleId = localStorage.getItem('RoleId') || '';
+    }
+  }
 
   // ==========================================
   // INIT
@@ -55,20 +53,24 @@ export class Sidebar implements OnInit {
   ngOnInit(): void {
     this.loadUserDetails();
 
-    console.log('========== SIDEBAR INIT ==========');
-    console.log('RoleId:', this.roleId);
-    console.log('UserId:', this.userId);
-    console.log('Is Public:', this.isPublic());
-    console.log('Is SADM:', this.isSadm());
-    console.log('Is DADM:', this.isDadm());
-    console.log('Is DOPT:', this.isDopt());
-    console.log('Is HELP:', this.isHelp());
-    console.log('==================================');
+    this.authSubscription = this.authService.currentUser$.subscribe((session) => {
+      if (session && (session.roleId || session.userId)) {
+        this.userId = (session.userId || '').trim();
+        this.roleId = (session.roleId || '').trim().toUpperCase();
+        this.reportsOpen = true;
+      } else {
+        this.loadUserDetails();
+      }
+    });
 
     // Logged-in user ke liye Reports open
     if (this.isLoggedIn()) {
       this.reportsOpen = true;
     }
+  }
+
+  ngOnDestroy(): void {
+    this.authSubscription?.unsubscribe();
   }
 
   // ==========================================

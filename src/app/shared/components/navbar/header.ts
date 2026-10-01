@@ -3,82 +3,72 @@ import {
   Output,
   EventEmitter,
   OnInit,
-  OnDestroy
+  OnDestroy,
+  ElementRef,
+  HostListener,
+  inject,
+  PLATFORM_ID
 } from '@angular/core';
-
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
-
-
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { Router, RouterLink, NavigationEnd } from '@angular/router';
+import { Subscription, filter } from 'rxjs';
+import { AuthService } from '../../../core/services/auth';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, FormsModule,RouterLink],
+  imports: [CommonModule, RouterLink],
   templateUrl: './header.html',
   styleUrl: './header.css'
 })
-
 export class Header implements OnInit, OnDestroy {
 
   @Output() toggleSidebar = new EventEmitter<void>();
 
+  private authService = inject(AuthService);
+  private router = inject(Router);
+  private elementRef = inject(ElementRef);
+  private platformId = inject(PLATFORM_ID);
+
   currentDate: Date = new Date();
-
   private timer: any;
+  private subscriptions = new Subscription();
 
-  // Login popup
-  showLoginPopup: boolean = false;
-
-  userId: string = '';
-  password: string = '';
-
-  captchaText: string = '';
-captchaInput: string = '';
-captchaCode: string = '';
-  showPassword: boolean = false;
-  loginError: string = '';
-  isLoading: boolean = false;
-
-generateCaptcha(): void {
-
-    const characters =
-      'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-
-    let captcha = '';
-
-    for (let i = 0; i < 6; i++) {
-
-      const randomIndex =
-        Math.floor(
-          Math.random() * characters.length
-        );
-
-      captcha += characters.charAt(randomIndex);
-
-    }
-
-    this.captchaCode = captcha;
-
-    this.captchaInput = '';
-
-    console.log(
-      'Generated CAPTCHA:',
-      this.captchaCode
-    );
-
-  }
-
-   togglePassword(): void {
-
-    this.showPassword =
-      !this.showPassword;
-
-  }
+  // Profile / Auth State
+  isLoggedIn: boolean = false;
+  username: string = '';
+  roleId: string = '';
+  roleDisplayName: string = '';
+  profileDropdownOpen: boolean = false;
 
   ngOnInit(): void {
-    this.generateCaptcha();
+    this.updateUserSession();
+
+    // Reactively listen to auth state changes (login, logout)
+    this.subscriptions.add(
+      this.authService.currentUser$.subscribe((session) => {
+        if (session && (session.userId || session.roleId)) {
+          this.isLoggedIn = true;
+          this.username = session.userId || 'User';
+          this.roleId = (session.roleId || '').trim().toUpperCase();
+          this.roleDisplayName = this.authService.getRoleDisplayName(this.roleId);
+        } else {
+          this.updateUserSession();
+        }
+      })
+    );
+
+    // Close dropdown & verify session upon navigation
+    this.subscriptions.add(
+      this.router.events
+        .pipe(filter((event) => event instanceof NavigationEnd))
+        .subscribe(() => {
+          this.profileDropdownOpen = false;
+          this.updateUserSession();
+        })
+    );
+
+    // Live clock
     this.timer = setInterval(() => {
       this.currentDate = new Date();
     }, 1000);
@@ -88,139 +78,67 @@ generateCaptcha(): void {
     if (this.timer) {
       clearInterval(this.timer);
     }
+    this.subscriptions.unsubscribe();
+  }
+
+  updateUserSession(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      const storedUserId = localStorage.getItem('UserId') || '';
+      const storedRoleId = (localStorage.getItem('RoleId') || '').trim().toUpperCase();
+      const token = localStorage.getItem('accessToken') || localStorage.getItem('token');
+
+      if (token || storedUserId || storedRoleId) {
+        this.isLoggedIn = true;
+        this.username = storedUserId || 'User';
+        this.roleId = storedRoleId;
+        this.roleDisplayName = this.authService.getRoleDisplayName(storedRoleId);
+        return;
+      }
+    }
+    this.isLoggedIn = false;
+    this.username = '';
+    this.roleId = '';
+    this.roleDisplayName = '';
   }
 
   onToggleSidebar(): void {
     this.toggleSidebar.emit();
   }
 
-  // Open login popup
-  openLoginPopup(): void {
-
-    this.showLoginPopup = true;
-
-    this.userId = '';
-
-    this.password = '';
-
-    this.captchaInput = '';
-
-    this.loginError = '';
-
-    this.showPassword = false;
-
-    this.isLoading = false;
-
-    // Generate new CAPTCHA
-    this.generateCaptcha();
-
+  toggleProfileDropdown(event?: Event): void {
+    if (event) {
+      event.stopPropagation();
+    }
+    this.profileDropdownOpen = !this.profileDropdownOpen;
   }
 
-  // Close login popup
-  closeLoginPopup(): void {
-
-    this.showLoginPopup = false;
-
-    this.userId = '';
-
-    this.password = '';
-
-    this.captchaInput = '';
-
-    this.loginError = '';
-
-    this.showPassword = false;
-
-    this.isLoading = false;
-
+  closeProfileDropdown(): void {
+    this.profileDropdownOpen = false;
   }
 
+  onLogout(): void {
+    this.profileDropdownOpen = false;
+    this.isLoggedIn = false;
+    this.username = '';
+    this.roleId = '';
+    this.roleDisplayName = '';
 
-  // Login
-login(): void {
-
-  if (
-      !this.userId ||
-      this.userId.trim() === ''
-    ) {
-
-      this.loginError =
-        'Please enter User ID.';
-
-      return;
-
-    }
-
-  if (
-      !this.password ||
-      this.password.trim() === ''
-    ) {
-
-      this.loginError =
-        'Please enter Password.';
-
-      return;
-
-    }
-
-  if (
-      !this.captchaInput ||
-      this.captchaInput.trim() === ''
-    ) {
-
-      this.loginError =
-        'Please enter Captcha.';
-
-      return;
-
-    }
-
-  if (
-      this.captchaInput.trim().toUpperCase() !==
-      this.captchaCode.trim().toUpperCase()
-    ) {
-
-      this.loginError =
-        'Invalid Captcha. Please try again.';
-
-      // Generate new CAPTCHA
-      this.generateCaptcha();
-
-      return;
-
-    }
-
-  // CAPTCHA correct
-  console.log('User ID:', this.userId);
-  console.log('Password:', this.password);
-  console.log('CAPTCHA verified');
-
-  setTimeout(() => {
-
-      this.isLoading = false;
-
-      console.log(
-        'User ID:',
-        this.userId
-      );
-
-      console.log(
-        'Password:',
-        this.password
-      );
-
-      console.log(
-        'CAPTCHA:',
-        this.captchaInput
-      );
-
-    }, 500);
-
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
 
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent): void {
+    if (this.profileDropdownOpen && this.elementRef?.nativeElement) {
+      const clickedInside = this.elementRef.nativeElement.contains(event.target as Node);
+      if (!clickedInside) {
+        this.profileDropdownOpen = false;
+      }
+    }
+  }
 
-
-  // Yahan login API call kar sakte hain
+  @HostListener('document:keydown.escape')
+  onEscapeKey(): void {
+    this.profileDropdownOpen = false;
+  }
 }
-
-

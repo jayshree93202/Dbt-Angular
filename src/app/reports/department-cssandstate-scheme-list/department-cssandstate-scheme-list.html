@@ -1,72 +1,342 @@
-<div class="scheme-page">
+<div class="scheme-page-container">
 
-  <!-- Page Heading -->
+  <!-- ========================================= -->
+  <!-- PAGE HEADER -->
+  <!-- ========================================= -->
   <div class="page-header">
-    <a href="javascript:void(0)" class="scheme-title">
-      Department CSS and State Scheme List
-    </a>
+    <div class="header-content">
+      <h2 class="page-title">
+        <i class="bi bi-diagram-3-fill me-2"></i>Department CSS and State Scheme List
+      </h2>
+      <p class="page-subtitle">
+        Directory of Centrally Sponsored Schemes (CSS) and State/UTs Schemes under DBT Bihar
+      </p>
+    </div>
+    <div class="header-badge" *ngIf="!isLoading && totalRecords > 0">
+      <span class="badge-count">{{ totalRecords }}</span>
+      <span class="badge-label">Total Schemes</span>
+    </div>
   </div>
 
-  <!-- Loading -->
-  <div class="loading-box" *ngIf="isLoading">
-    Loading scheme list...
+  <!-- ========================================= -->
+  <!-- FILTER SECTION -->
+  <!-- ========================================= -->
+  <div class="filter-card">
+    <div class="filter-grid">
+
+      <!-- Scheme Type Filter -->
+      <div class="filter-group">
+        <label for="schemeTypeSelect">
+          <i class="bi bi-tag-fill me-1"></i>Scheme Category
+        </label>
+        <select
+          id="schemeTypeSelect"
+          class="form-control filter-select"
+          [(ngModel)]="selectedSchemeType"
+          (change)="onSchemeTypeChange()"
+        >
+          <option value="1">Centrally Sponsored Schemes (CSS)</option>
+          <option value="2">State / UTs Schemes</option>
+          <option value="all">All (CSS & State Schemes)</option>
+        </select>
+      </div>
+
+      <!-- Department Filter -->
+      <div class="filter-group">
+        <label for="departmentSelect">
+          <i class="bi bi-building me-1"></i>Department
+        </label>
+        <select
+          id="departmentSelect"
+          class="form-control filter-select"
+          [(ngModel)]="selectedDepartment"
+          (change)="onDepartmentChange()"
+        >
+          <option value="">-- All Departments --</option>
+          <option *ngFor="let dept of departments" [value]="dept">
+            {{ dept }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Reset Filter Button -->
+      <div class="filter-group filter-action-group">
+        <label class="d-none d-md-block">&nbsp;</label>
+        <button
+          type="button"
+          class="btn-reset-all"
+          (click)="resetAllFilters()"
+          title="Reset all filters"
+        >
+          <i class="bi bi-arrow-clockwise"></i> Reset Filters
+        </button>
+      </div>
+
+    </div>
   </div>
 
-  <!-- No Data -->
-  <div class="no-data" *ngIf="!isLoading && schemeList.length === 0">
-    No scheme data found.
+  <!-- ========================================= -->
+  <!-- TABLE CARD -->
+  <!-- ========================================= -->
+  <div class="table-card">
+
+    <!-- Table Toolbar: Page Size, Search Box, Excel Export -->
+    <div class="table-toolbar">
+
+      <!-- Left: Page Size Selector & Total Info -->
+      <div class="toolbar-left">
+        <label for="pageSizeSelect" class="page-size-label">Show</label>
+        <select
+          id="pageSizeSelect"
+          class="form-control page-size-select"
+          [(ngModel)]="pageSize"
+          (change)="onPageSizeChange()"
+        >
+          <option *ngFor="let size of pageSizeOptions" [value]="size">
+            {{ size }}
+          </option>
+        </select>
+        <span class="page-size-label">entries</span>
+
+        <span class="badge-total" *ngIf="!isLoading">
+          Total: <strong>{{ totalRecords }}</strong> schemes
+        </span>
+      </div>
+
+      <!-- Right: Search Box & Download Button -->
+      <div class="toolbar-right">
+        <!-- Search Input -->
+        <div class="search-box">
+          <i class="bi bi-search search-icon"></i>
+          <input
+            type="text"
+            class="form-control search-input"
+            placeholder="Search scheme, dept, code..."
+            [(ngModel)]="searchTerm"
+            (ngModelChange)="onSearchChange()"
+          />
+          <button
+            *ngIf="searchTerm"
+            type="button"
+            class="btn-clear-search"
+            (click)="clearSearch()"
+            title="Clear search"
+          >
+            <i class="bi bi-x"></i>
+          </button>
+        </div>
+
+        <!-- Download Excel -->
+        <button
+          type="button"
+          class="download-btn"
+          (click)="downloadExcel()"
+          [disabled]="isLoading || filteredSchemes.length === 0"
+          title="Download scheme list as Excel CSV"
+        >
+          <i class="bi bi-file-earmark-excel"></i>
+          <span>Download Excel</span>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Loading Spinner -->
+    <div class="table-loading" *ngIf="isLoading">
+      <div class="spinner-border"></div>
+      <span>Loading scheme records, please wait...</span>
+    </div>
+
+    <!-- ========================================= -->
+    <!-- SCHEME TABLE -->
+    <!-- ========================================= -->
+    <div class="table-responsive" *ngIf="!isLoading">
+
+      <table class="scheme-table">
+
+        <!-- Table Header -->
+        <thead>
+          <tr>
+            <th class="col-sr">Sr. No.</th>
+            <th class="col-dept">Department</th>
+            <th class="col-name">Scheme Name</th>
+            <th class="col-code">Scheme Code</th>
+            <th class="col-type">Scheme Type</th>
+            <th class="col-transfer">Transfer Type</th>
+          </tr>
+        </thead>
+
+        <!-- Table Body -->
+        <tbody>
+
+          <!-- Data Rows -->
+          <tr *ngFor="let item of paginatedSchemes; let i = index">
+
+            <!-- Sr. No -->
+            <td class="col-sr text-center">
+              {{ (currentPage - 1) * pageSize + i + 1 }}
+            </td>
+
+            <!-- Department Name -->
+            <td class="col-dept">
+              <span class="dept-text">{{ item.department_Name || 'N/A' }}</span>
+            </td>
+
+            <!-- Scheme Name -->
+            <td class="col-name">
+              <span class="scheme-name-text">{{ item.schemeName || 'N/A' }}</span>
+            </td>
+
+            <!-- Scheme Code -->
+            <td class="col-code">
+              <span class="scheme-code-badge" *ngIf="item.schemeCode">
+                {{ item.schemeCode.trim() }}
+              </span>
+              <span class="text-muted fst-italic" *ngIf="!item.schemeCode">
+                N/A
+              </span>
+            </td>
+
+            <!-- Scheme Type -->
+            <td class="col-type">
+              <span
+                class="scheme-type-badge"
+                [class.type-central]="item.schemeType && item.schemeType.includes('Centrally')"
+                [class.type-state]="!item.schemeType || !item.schemeType.includes('Centrally')"
+              >
+                {{ item.schemeType || 'N/A' }}
+              </span>
+            </td>
+
+            <!-- Transfer Type -->
+            <td class="col-transfer">
+              <span class="transfer-type-badge">
+                <i class="bi bi-cash-stack me-1"></i>{{ item.transferType || 'N/A' }}
+              </span>
+            </td>
+
+          </tr>
+
+          <!-- Empty State (No records found) -->
+          <tr *ngIf="paginatedSchemes.length === 0">
+            <td colspan="6" class="no-data-cell">
+              <div class="no-data-wrapper">
+                <i class="bi bi-inbox no-data-icon"></i>
+                <p class="no-data-text" *ngIf="searchTerm">
+                  No schemes found matching "<strong>{{ searchTerm }}</strong>"
+                </p>
+                <p class="no-data-text" *ngIf="!searchTerm">
+                  No scheme records available for the selected filters.
+                </p>
+                <button
+                  type="button"
+                  class="btn-reset-filter"
+                  (click)="resetAllFilters()"
+                >
+                  <i class="bi bi-arrow-clockwise"></i> Reset Filters
+                </button>
+              </div>
+            </td>
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+    <!-- ========================================= -->
+    <!-- PAGINATION BAR -->
+    <!-- ========================================= -->
+    <div class="pagination-container" *ngIf="!isLoading && totalRecords > 0">
+
+      <!-- Showing X to Y of Z entries -->
+      <div class="pagination-info">
+        Showing <strong>{{ startIndex }}</strong> to <strong>{{ endIndex }}</strong> of <strong>{{ totalRecords }}</strong> entries
+      </div>
+
+      <!-- Navigation buttons -->
+      <nav class="pagination-nav" aria-label="Scheme pagination">
+        <ul class="pagination-list">
+
+          <!-- First Page -->
+          <li class="page-item" [class.disabled]="currentPage === 1">
+            <button
+              type="button"
+              class="page-link"
+              (click)="firstPage()"
+              [disabled]="currentPage === 1"
+              title="First Page"
+            >
+              <i class="bi bi-chevron-double-left"></i>
+            </button>
+          </li>
+
+          <!-- Previous Page -->
+          <li class="page-item" [class.disabled]="currentPage === 1">
+            <button
+              type="button"
+              class="page-link"
+              (click)="previousPage()"
+              [disabled]="currentPage === 1"
+              title="Previous Page"
+            >
+              <i class="bi bi-chevron-left"></i>
+            </button>
+          </li>
+
+          <!-- Page Numbers with Ellipsis -->
+          <ng-container *ngFor="let page of getPageNumbers()">
+            <li
+              class="page-item"
+              [class.active]="page === currentPage"
+              [class.ellipsis]="page === '...'"
+            >
+              <button
+                *ngIf="page !== '...'"
+                type="button"
+                class="page-link"
+                (click)="goToPage(page)"
+              >
+                {{ page }}
+              </button>
+              <span *ngIf="page === '...'" class="page-link ellipsis-span">
+                ...
+              </span>
+            </li>
+          </ng-container>
+
+          <!-- Next Page -->
+          <li class="page-item" [class.disabled]="currentPage === totalPages">
+            <button
+              type="button"
+              class="page-link"
+              (click)="nextPage()"
+              [disabled]="currentPage === totalPages"
+              title="Next Page"
+            >
+              <i class="bi bi-chevron-right"></i>
+            </button>
+          </li>
+
+          <!-- Last Page -->
+          <li class="page-item" [class.disabled]="currentPage === totalPages">
+            <button
+              type="button"
+              class="page-link"
+              (click)="lastPage()"
+              [disabled]="currentPage === totalPages"
+              title="Last Page"
+            >
+              <i class="bi bi-chevron-double-right"></i>
+            </button>
+          </li>
+
+        </ul>
+      </nav>
+
+    </div>
+
   </div>
-
-  <!-- Scheme Table -->
-<div class="table-wrapper" *ngIf="!isLoading && schemeList.length > 0">
-
-  <table class="scheme-table">
-
-    <thead>
-      <tr>
-        <th class="serial-col">Serial No.</th>
-        <th>Department</th>
-        <th>Centrally Sponsored Scheme Name</th>
-        <th>Scheme Code</th>
-        <th>Scheme Type</th>
-        <th>Transfer Type</th>
-      </tr>
-    </thead>
-
-    <tbody>
-
-      <tr *ngFor="let item of schemeList; let i = index">
-
-        <td class="serial-col">
-          {{ i + 1 }}
-        </td>
-
-        <td>
-          {{ item.department_Name }}
-        </td>
-
-        <td class="scheme-name">
-          {{ item.schemeName }}
-        </td>
-
-        <!-- <td>
-          {{ item.schemeCode?.trim() }}
-        </td> -->
-
-        <td>
-          {{ item.schemeType }}
-        </td>
-
-        <td>
-          {{ item.transferType }}
-        </td>
-
-      </tr>
-
-    </tbody>
-
-  </table>
-
-</div>
 
 </div>

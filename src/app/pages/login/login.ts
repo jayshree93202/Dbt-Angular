@@ -82,12 +82,7 @@ export class LoginComponent {
             const decryptedRoleId = await this.encryptionService.decryptField(encryptedRoleId);
             this.roleId = decryptedRoleId;
 
-            if (isPlatformBrowser(this.platformId)) {
-              localStorage.setItem('accessToken', token);
-              localStorage.setItem('token', token);
-              localStorage.setItem('UserId', this.UserId);
-              localStorage.setItem('RoleId', decryptedRoleId);
-            }
+            this.authService.setSession(this.UserId, decryptedRoleId, token);
 
             // Role Wise Redirection
             // switch (decryptedRoleId) {

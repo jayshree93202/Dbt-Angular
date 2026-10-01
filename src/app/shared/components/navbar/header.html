@@ -4,21 +4,14 @@
   <div class="header-left">
 
     <!-- Menu Button -->
-<button
-  class="menu-btn"
-  type="button"
-  (click)="onToggleSidebar()">
-
-  <i class="bi bi-list"></i>
-
-</button>
-
-    <!-- Bihar Government Logo -->
-    <!-- <img
-      src="assets/images/logos/biharlogo.png"
-      alt="Government of Bihar Logo"
-      class="navbar-logo"
-    /> -->
+    <button
+      class="menu-btn"
+      type="button"
+      (click)="onToggleSidebar()"
+      aria-label="Toggle Navigation Sidebar"
+    >
+      <i class="bi bi-list"></i>
+    </button>
 
     <!-- Title -->
     <div class="header-title">
@@ -39,44 +32,136 @@
       <input
         type="text"
         placeholder="Financial Year 2026-2027"
+        aria-label="Search Financial Year"
       />
     </div>
 
 
     <!-- Date & Time -->
     <div class="date-time">
-
       <i class="bi bi-calendar3"></i>
 
       <div class="date-text">
         <span class="today">Today</span>
-         <span>{{ currentDate | date:'dd MMM yyyy, hh:mm a' }}</span>
+        <span>{{ currentDate | date:'dd MMM yyyy, hh:mm a' }}</span>
       </div>
-
     </div>
 
 
-    <!-- Profile -->
-    <!-- Admin Profile -->
-<div class="profile-section" routerLink="/login" role="button">
+    <!-- Profile / Login Section -->
+    <div class="profile-wrapper">
 
-  <div class="profile-icon">
-    <i class="bi bi-person-fill"></i>
-  </div>
+      <!-- Logged-in User Profile with Dropdown -->
+      <ng-container *ngIf="isLoggedIn; else loginTemplate">
+        <div
+          class="profile-section logged-in"
+          role="button"
+          tabindex="0"
+          (click)="toggleProfileDropdown($event)"
+          (keydown.enter)="toggleProfileDropdown($event)"
+          [class.active]="profileDropdownOpen"
+          aria-haspopup="true"
+          [attr.aria-expanded]="profileDropdownOpen"
+          title="Click to view profile menu"
+        >
+          <div class="profile-icon">
+            <i class="bi bi-person-fill"></i>
+          </div>
 
-   <span class="admin-name" routerLink="/login">Login</span>
+          <div class="user-meta">
+            <span class="admin-name" [title]="username">{{ username }}</span>
+            <span class="user-role-badge" *ngIf="roleDisplayName || roleId">
+              {{ roleDisplayName || roleId }}
+            </span>
+          </div>
 
-  <i class="bi bi-chevron-down profile-arrow"></i>
+          <i
+            class="bi bi-chevron-down profile-arrow"
+            [class.rotate-arrow]="profileDropdownOpen"
+          ></i>
+        </div>
 
+        <!-- Dropdown Menu -->
+        <div
+          class="profile-dropdown-menu"
+          *ngIf="profileDropdownOpen"
+          (click)="$event.stopPropagation()"
+        >
+          <!-- User Details Banner -->
+          <div class="dropdown-header-card">
+            <div class="dropdown-avatar-circle">
+              <i class="bi bi-person-fill"></i>
+            </div>
+            <div class="dropdown-user-details">
+              <span class="dropdown-username" [title]="username">{{ username }}</span>
+              <span class="dropdown-role-title">{{ roleDisplayName }}</span>
+              <span class="dropdown-role-tag" *ngIf="roleId">
+                <i class="bi bi-shield-check"></i> {{ roleId }}
+              </span>
+            </div>
+          </div>
 
+          <!-- Menu Links -->
+          <ul class="dropdown-menu-list">
+            <li>
+              <a
+                routerLink="/dashboard"
+                (click)="closeProfileDropdown()"
+                class="dropdown-menu-item"
+              >
+                <i class="bi bi-speedometer2"></i>
+                <span>Dashboard</span>
+              </a>
+            </li>
 
-  </div>
+            <li>
+              <a
+                routerLink="/settings"
+                (click)="closeProfileDropdown()"
+                class="dropdown-menu-item"
+              >
+                <i class="bi bi-key-fill"></i>
+                <span>Change Password</span>
+              </a>
+            </li>
 
-  <!-- Login Popup -->
+            <li class="dropdown-divider"></li>
 
+            <!-- Logout Option -->
+            <li>
+              <button
+                type="button"
+                class="dropdown-menu-item logout-option"
+                (click)="onLogout()"
+              >
+                <i class="bi bi-box-arrow-right"></i>
+                <span>Logout</span>
+              </button>
+            </li>
+          </ul>
+        </div>
+      </ng-container>
 
-    <!-- Login Body -->
-  
+      <!-- Guest / Not Logged In -->
+      <ng-template #loginTemplate>
+        <div
+          class="profile-section guest-login"
+          routerLink="/login"
+          role="button"
+          tabindex="0"
+          title="Click to Login"
+        >
+          <div class="profile-icon">
+            <i class="bi bi-person"></i>
+          </div>
+
+          <span class="admin-name">Login</span>
+
+          <i class="bi bi-box-arrow-in-right profile-arrow"></i>
+        </div>
+      </ng-template>
+
+    </div>
 
   </div>
 

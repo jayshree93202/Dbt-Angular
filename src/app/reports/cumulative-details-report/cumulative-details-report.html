@@ -1,0 +1,355 @@
+<div class="scheme-report-page">
+
+  <!-- ========================================= -->
+  <!-- PAGE TITLE -->
+  <!-- ========================================= -->
+
+  <div class="page-title">
+    <h2>Scheme Wise DBT Transfer Summary</h2>
+    <span class="page-subtitle">Cumulative details of direct benefit transfer schemes</span>
+  </div>
+
+
+  <!-- ========================================= -->
+  <!-- FILTER SECTION -->
+  <!-- ========================================= -->
+
+  <div class="filter-section">
+
+    <!-- Financial Year -->
+    <div class="filter-group">
+      <label for="financialYear">
+        Financial Year <span class="required">*</span>
+      </label>
+
+      <select
+        id="financialYear"
+        class="form-control"
+        [(ngModel)]="selectedFinancialYear"
+        (change)="onFinancialYearChange()"
+      >
+        <option value="">--Select Financial Year--</option>
+
+        <option
+          *ngFor="let year of financialYears"
+          [value]="year.fYearId"
+        >
+          {{ year.financialYear }}
+        </option>
+      </select>
+    </div>
+
+
+    <!-- Department -->
+    <div class="filter-group">
+      <label for="department">
+        Department
+      </label>
+
+      <select
+        id="department"
+        class="form-control"
+        [(ngModel)]="selectedDepartment"
+        (change)="onDepartmentChange()"
+      >
+        <option value="">--All Departments--</option>
+
+        <option
+          *ngFor="let department of departments"
+          [value]="department.deptCode"
+        >
+          {{ department.name }}
+        </option>
+      </select>
+    </div>
+
+
+    <!-- Scheme Type -->
+    <div class="filter-group">
+      <label for="schemeType">
+        Scheme Type
+      </label>
+
+      <select
+        id="schemeType"
+        class="form-control"
+        [(ngModel)]="selectedSchemeType"
+        (change)="onSchemeTypeChange()"
+      >
+        <option value="">--All Scheme Types--</option>
+
+        <option value="Reported Scheme">
+          Reported Scheme
+        </option>
+
+        <option value="UnReported Scheme">
+          UnReported Scheme
+        </option>
+      </select>
+    </div>
+
+  </div>
+
+
+  <!-- ========================================= -->
+  <!-- TABLE CARD -->
+  <!-- ========================================= -->
+
+  <div class="table-card">
+
+    <!-- Table Toolbar: Page Size Selector & Download Button -->
+    <div class="table-toolbar">
+
+      <div class="toolbar-left">
+        <label for="pageSizeSelect" class="page-size-label">Show</label>
+        <select
+          id="pageSizeSelect"
+          class="form-control page-size-select"
+          [(ngModel)]="pageSize"
+          (change)="onPageSizeChange()"
+        >
+          <option *ngFor="let size of pageSizeOptions" [value]="size">
+            {{ size }}
+          </option>
+        </select>
+        <span class="page-size-label">entries</span>
+
+        <span class="badge-total" *ngIf="!loading">
+          Total: <strong>{{ totalRecords }}</strong> schemes
+        </span>
+      </div>
+
+      <div class="toolbar-right">
+        <button
+          type="button"
+          class="download-btn"
+          (click)="downloadExcel()"
+          [disabled]="loading || reportData.length === 0"
+          title="Download report data as Excel CSV"
+        >
+          <i class="bi bi-file-earmark-excel"></i>
+          <span>Download Excel</span>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Loading Spinner -->
+    <div class="table-loading" *ngIf="loading">
+      <div class="spinner-border"></div>
+      <span>Loading summary data, please wait...</span>
+    </div>
+
+
+    <!-- ========================================= -->
+    <!-- REPORT TABLE -->
+    <!-- ========================================= -->
+
+    <div class="table-responsive" *ngIf="!loading">
+
+      <table class="report-table">
+
+        <!-- TABLE HEADER -->
+        <thead>
+          <tr>
+            <th class="col-sr">Sr. No</th>
+            <th class="col-dept">Department</th>
+            <th class="col-scheme">Scheme</th>
+            <th class="col-number">Total Beneficiary</th>
+            <th class="col-number">Transfer Amount (₹)</th>
+            <th class="col-number">Aadhaar Seeded Beneficiaries</th>
+            <th class="col-number">No. of Transactions</th>
+            <th class="col-number">Aadhaar Seeded Transactions</th>
+            <th class="col-date">Last Updated</th>
+          </tr>
+        </thead>
+
+
+        <!-- TABLE BODY -->
+        <tbody>
+
+          <tr *ngFor="let item of paginatedReportData; let i = index">
+
+            <!-- Sr No -->
+            <td class="text-center col-sr">
+              {{ (currentPage - 1) * pageSize + i + 1 }}
+            </td>
+
+            <!-- Department -->
+            <td class="dept-name">
+              {{ item.department }}
+            </td>
+
+            <!-- Scheme -->
+            <td class="scheme-name">
+              {{ item.scheme }}
+            </td>
+
+            <!-- Total Beneficiary -->
+            <td class="number-cell">
+              {{ item.totalBeneficiary | number }}
+            </td>
+
+            <!-- Transfer Amount -->
+            <td class="number-cell amount-cell">
+              {{ item.transferAmount | number }}
+            </td>
+
+            <!-- Aadhaar Seeded Beneficiaries -->
+            <td class="number-cell">
+              {{ item.aadhaarSeededBeneficiaries | number }}
+            </td>
+
+            <!-- No of Transaction -->
+            <td class="number-cell">
+              {{ item.noOfTransaction | number }}
+            </td>
+
+            <!-- Aadhaar Seeded Transactions -->
+            <td class="number-cell">
+              {{ item.aadhaarSeededTransactions | number }}
+            </td>
+
+            <!-- Last Updated -->
+            <td class="text-center date-cell">
+              <span [class.badge-unreported]="item.lastUpdated === 'Not Reported'">
+                {{ item.lastUpdated }}
+              </span>
+            </td>
+
+          </tr>
+
+
+          <!-- NO DATA -->
+          <tr *ngIf="paginatedReportData.length === 0">
+            <td colspan="9" class="no-data">
+              <i class="bi bi-inbox no-data-icon"></i>
+              <p>No record found for selected filters</p>
+            </td>
+          </tr>
+
+
+          <!-- OVERALL TOTAL ROW -->
+          <tr *ngIf="reportData.length > 0" class="total-row">
+            <td colspan="3" class="total-label">
+              <strong>Overall Total ({{ totalRecords }} Schemes):</strong>
+            </td>
+            <td class="number-cell">
+              <strong>{{ totalBeneficiary | number }}</strong>
+            </td>
+            <td class="number-cell amount-cell">
+              <strong>{{ totalTransferAmount | number }}</strong>
+            </td>
+            <td class="number-cell">
+              <strong>{{ totalAadhaarSeededBeneficiaries | number }}</strong>
+            </td>
+            <td class="number-cell">
+              <strong>{{ totalTransactions | number }}</strong>
+            </td>
+            <td class="number-cell">
+              <strong>{{ totalAadhaarSeededTransactions | number }}</strong>
+            </td>
+            <td></td>
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+
+    <!-- ========================================= -->
+    <!-- PAGINATION BAR -->
+    <!-- ========================================= -->
+
+    <div class="pagination-container" *ngIf="!loading && totalRecords > 0">
+
+      <div class="pagination-info">
+        Showing <strong>{{ startIndex }}</strong> to <strong>{{ endIndex }}</strong> of <strong>{{ totalRecords }}</strong> entries
+      </div>
+
+      <nav class="pagination-nav" aria-label="Page navigation">
+        <ul class="pagination-list">
+
+          <!-- First Page -->
+          <li class="page-item" [class.disabled]="currentPage === 1">
+            <button
+              type="button"
+              class="page-link"
+              (click)="firstPage()"
+              [disabled]="currentPage === 1"
+              title="First Page"
+            >
+              <i class="bi bi-chevron-double-left"></i>
+            </button>
+          </li>
+
+          <!-- Previous Page -->
+          <li class="page-item" [class.disabled]="currentPage === 1">
+            <button
+              type="button"
+              class="page-link"
+              (click)="previousPage()"
+              [disabled]="currentPage === 1"
+              title="Previous Page"
+            >
+              <i class="bi bi-chevron-left"></i>
+            </button>
+          </li>
+
+          <!-- Page Numbers -->
+          <ng-container *ngFor="let page of getPageNumbers()">
+            <li
+              class="page-item"
+              [class.active]="page === currentPage"
+              [class.ellipsis]="page === '...'"
+            >
+              <button
+                *ngIf="page !== '...'"
+                type="button"
+                class="page-link"
+                (click)="goToPage(+page)"
+              >
+                {{ page }}
+              </button>
+              <span *ngIf="page === '...'" class="page-link ellipsis-span">
+                ...
+              </span>
+            </li>
+          </ng-container>
+
+          <!-- Next Page -->
+          <li class="page-item" [class.disabled]="currentPage === totalPages">
+            <button
+              type="button"
+              class="page-link"
+              (click)="nextPage()"
+              [disabled]="currentPage === totalPages"
+              title="Next Page"
+            >
+              <i class="bi bi-chevron-right"></i>
+            </button>
+          </li>
+
+          <!-- Last Page -->
+          <li class="page-item" [class.disabled]="currentPage === totalPages">
+            <button
+              type="button"
+              class="page-link"
+              (click)="lastPage()"
+              [disabled]="currentPage === totalPages"
+              title="Last Page"
+            >
+              <i class="bi bi-chevron-double-right"></i>
+            </button>
+          </li>
+
+        </ul>
+      </nav>
+
+    </div>
+
+  </div>
+
+</div>

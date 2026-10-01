@@ -1,125 +1,355 @@
-<div class="scheme-page">
+<div class="scheme-page-container">
 
-  <!-- Page Title -->
-  <div class="page-title">
-    <h2>Last Updated Scheme Report</h2>
+  <!-- ========================================= -->
+  <!-- PAGE HEADER -->
+  <!-- ========================================= -->
+  <div class="page-header">
+    <div class="header-content">
+      <h2 class="page-title">
+        <i class="bi bi-clock-history me-2"></i>Last Updated Scheme Report
+      </h2>
+      <p class="page-subtitle">
+        Track the latest data entry and update status of DBT schemes across all departments
+      </p>
+    </div>
+    <div class="header-badge" *ngIf="!loading && totalRecords > 0">
+      <span class="badge-count">{{ totalRecords }}</span>
+      <span class="badge-label">Schemes Tracked</span>
+    </div>
   </div>
 
-  <!-- Search Section -->
-  <div class="search-section">
+  <!-- ========================================= -->
+  <!-- FILTER SECTION -->
+  <!-- ========================================= -->
+  <div class="filter-card">
+    <div class="filter-grid">
 
-    <!-- Department -->
-    <div class="filter-item department-filter">
-      <label for="department">Department</label>
+      <!-- Department Filter -->
+      <div class="filter-group department-group">
+        <label for="department">
+          <i class="bi bi-building me-1"></i>Department
+        </label>
+        <select
+          id="department"
+          class="form-control filter-select"
+          [(ngModel)]="selectedDepartment"
+          (change)="onDepartmentChange()"
+        >
+          <option value="">-- All Departments --</option>
+          <option
+            *ngFor="let department of departments"
+            [value]="department.deptCode"
+          >
+            {{ department.name }}
+          </option>
+        </select>
+      </div>
 
-      <select
-        id="department"
-        class="form-control"
-        [(ngModel)]="selectedDepartment"
-        (change)="onDepartmentChange()">
+      <!-- Scheme Filter -->
+      <div class="filter-group scheme-group">
+        <label for="scheme">
+          <i class="bi bi-journal-text me-1"></i>Scheme
+        </label>
+        <select
+          id="scheme"
+          class="form-control filter-select"
+          [(ngModel)]="selectedScheme"
+          (change)="onSchemeChange()"
+        >
+          <option value="">-- All Schemes --</option>
+          <option
+            *ngFor="let scheme of filteredSchemes"
+            [value]="scheme.schemeCode"
+          >
+            {{ scheme.schemeName }}
+          </option>
+        </select>
+      </div>
 
-        <option value="">--All--</option>
+      <!-- Search & Reset Buttons -->
+      <div class="filter-group filter-action-group">
+        <label class="d-none d-md-block">&nbsp;</label>
+        <div class="filter-buttons">
+          <button
+            type="button"
+            class="btn-search"
+            (click)="searchScheme()"
+            [disabled]="loading"
+          >
+            <i class="bi bi-search me-1"></i>
+            {{ loading ? 'Searching...' : 'Search' }}
+          </button>
 
-        <option
-          *ngFor="let department of departments"
-          [value]="department" (change)="onFilterChange()">
-          {{ department }}
-        </option>
+          <button
+            type="button"
+            class="btn-reset"
+            (click)="resetFilters()"
+            [disabled]="loading"
+            title="Reset filters"
+          >
+            <i class="bi bi-arrow-clockwise me-1"></i>Reset
+          </button>
+        </div>
+      </div>
 
-      </select>
     </div>
-
-
-    <!-- Scheme -->
-    <div class="filter-item scheme-filter">
-      <label for="scheme">Scheme</label>
-
-      <select
-        id="scheme"
-        class="form-control"
-        [(ngModel)]="selectedScheme"
-        (change)="onFilterChange()">
-
-        <option value="">--All--</option>
-
-        <option
-          *ngFor="let scheme of filteredSchemes"
-          [value]="scheme">
-          {{ scheme }}
-        </option>
-
-      </select>
-    </div>
-
-
-    <!-- Search -->
-    <div class="search-btn-wrapper">
-      <button
-        type="button"
-        class="btn-search"
-        (click)="searchScheme()">
-        Search
-      </button>
-    </div>
-
   </div>
 
-
-  <!-- Table Card -->
+  <!-- ========================================= -->
+  <!-- TABLE CARD -->
+  <!-- ========================================= -->
   <div class="table-card">
 
-    <!-- Download -->
-    <div class="table-header">
-      <button
-        type="button"
-        class="btn-download"
+    <!-- Table Toolbar: Page Size, Search Box, Excel Export -->
+    <div class="table-toolbar">
+
+      <!-- Left: Page Size Selector & Total Info -->
+      <div class="toolbar-left">
+        <label for="pageSizeSelect" class="page-size-label">Show</label>
+        <select
+          id="pageSizeSelect"
+          class="form-control page-size-select"
+          [(ngModel)]="pageSize"
+          (change)="onPageSizeChange()"
         >
-        Download Excel
-      </button>
+          <option *ngFor="let size of pageSizeOptions" [value]="size">
+            {{ size }}
+          </option>
+        </select>
+        <span class="page-size-label">entries</span>
+
+        <span class="badge-total" *ngIf="!loading">
+          Total: <strong>{{ totalRecords }}</strong> schemes
+        </span>
+      </div>
+
+      <!-- Right: Search Box & Download Button -->
+      <div class="toolbar-right">
+        <!-- Search Input -->
+        <div class="search-box">
+          <i class="bi bi-search search-icon"></i>
+          <input
+            type="text"
+            class="form-control search-input"
+            placeholder="Search scheme, dept, code, date..."
+            [(ngModel)]="searchTerm"
+            (ngModelChange)="onSearchChange()"
+          />
+          <button
+            *ngIf="searchTerm"
+            type="button"
+            class="btn-clear-search"
+            (click)="clearSearch()"
+            title="Clear search"
+          >
+            <i class="bi bi-x"></i>
+          </button>
+        </div>
+
+        <!-- Download Excel -->
+        <button
+          type="button"
+          class="download-btn"
+          (click)="downloadExcel()"
+          [disabled]="loading || filteredSchemeList.length === 0"
+          title="Download report as Excel CSV"
+        >
+          <i class="bi bi-file-earmark-excel"></i>
+          <span>Download Excel</span>
+        </button>
+      </div>
+
     </div>
 
+    <!-- Loading Spinner -->
+    <div class="table-loading" *ngIf="loading">
+      <div class="spinner-border"></div>
+      <span>Loading update reports, please wait...</span>
+    </div>
 
-    <!-- Table -->
-    <div class="table-responsive">
+    <!-- ========================================= -->
+    <!-- SCHEME TABLE -->
+    <!-- ========================================= -->
+    <div class="table-responsive" *ngIf="!loading">
 
       <table class="scheme-table">
 
+        <!-- Table Header -->
         <thead>
           <tr>
-            <th>Department Name</th>
-            <th>Scheme Name</th>
-            <th>Scheme Last Updated Date</th>
+            <th class="col-sr">Sr. No.</th>
+            <th class="col-dept">Department Name</th>
+            <th class="col-name">Scheme Name</th>
+            <th class="col-code">DBT Scheme Code</th>
+            <th class="col-date">Scheme Last Updated Date</th>
           </tr>
         </thead>
 
+        <!-- Table Body -->
         <tbody>
 
-          <tr *ngFor="let item of filteredSchemeList">
+          <!-- Data Rows -->
+          <tr *ngFor="let item of paginatedSchemeList; let i = index">
 
-            <td>
-              {{ item.DepartmentName }}
+            <!-- Sr. No -->
+            <td class="col-sr text-center">
+              {{ (currentPage - 1) * pageSize + i + 1 }}
             </td>
 
-            <td>
-              {{ item.SchemeName }}
+            <!-- Department Name -->
+            <td class="col-dept">
+              <span class="dept-text">{{ item.name || item.DepartmentName || '-' }}</span>
             </td>
 
-            <td>
-              {{ item.SchemeLastUpdatedDate }}
+            <!-- Scheme Name -->
+            <td class="col-name">
+              <span class="scheme-name-text">{{ item.schemeName || item.SchemeName || '-' }}</span>
+            </td>
+
+            <!-- DBT Scheme Code -->
+            <td class="col-code">
+              <span class="dbt-code-badge" *ngIf="item.dbtSchemeCode || item.schemeCode">
+                {{ (item.dbtSchemeCode || item.schemeCode).trim() }}
+              </span>
+              <span class="text-muted fst-italic" *ngIf="!item.dbtSchemeCode && !item.schemeCode">
+                -
+              </span>
+            </td>
+
+            <!-- Last Updated Date -->
+            <td class="col-date">
+              <div *ngIf="item.entryDate || item.SchemeLastUpdatedDate; else noDateBlock" class="date-wrapper">
+                <i class="bi bi-calendar-check text-primary"></i>
+                <span class="date-text">
+                  {{ (item.entryDate || item.SchemeLastUpdatedDate) | date:'dd-MM-yyyy' }}
+                </span>
+              </div>
+              <ng-template #noDateBlock>
+                <span class="never-reported-badge">
+                  <i class="bi bi-clock-history me-1"></i>Not Available
+                </span>
+              </ng-template>
             </td>
 
           </tr>
 
-
-          <tr *ngIf="filteredSchemeList.length === 0">
-            <td colspan="3" class="no-data">
-              No Record Found
+          <!-- Empty State (No records found) -->
+          <tr *ngIf="paginatedSchemeList.length === 0">
+            <td colspan="5" class="no-data-cell">
+              <div class="no-data-wrapper">
+                <i class="bi bi-inbox no-data-icon"></i>
+                <p class="no-data-text" *ngIf="searchTerm">
+                  No records found matching "<strong>{{ searchTerm }}</strong>"
+                </p>
+                <p class="no-data-text" *ngIf="!searchTerm">
+                  No update records found for the selected criteria.
+                </p>
+                <button
+                  type="button"
+                  class="btn-reset-filter"
+                  (click)="resetFilters()"
+                >
+                  <i class="bi bi-arrow-clockwise"></i> Reset Filters
+                </button>
+              </div>
             </td>
           </tr>
 
         </tbody>
 
       </table>
+
+    </div>
+
+    <!-- ========================================= -->
+    <!-- PAGINATION BAR -->
+    <!-- ========================================= -->
+    <div class="pagination-container" *ngIf="!loading && totalRecords > 0">
+
+      <!-- Showing X to Y of Z entries -->
+      <div class="pagination-info">
+        Showing <strong>{{ startIndex }}</strong> to <strong>{{ endIndex }}</strong> of <strong>{{ totalRecords }}</strong> entries
+      </div>
+
+      <!-- Navigation buttons -->
+      <nav class="pagination-nav" aria-label="Scheme updates pagination">
+        <ul class="pagination-list">
+
+          <!-- First Page -->
+          <li class="page-item" [class.disabled]="currentPage === 1">
+            <button
+              type="button"
+              class="page-link"
+              (click)="firstPage()"
+              [disabled]="currentPage === 1"
+              title="First Page"
+            >
+              <i class="bi bi-chevron-double-left"></i>
+            </button>
+          </li>
+
+          <!-- Previous Page -->
+          <li class="page-item" [class.disabled]="currentPage === 1">
+            <button
+              type="button"
+              class="page-link"
+              (click)="previousPage()"
+              [disabled]="currentPage === 1"
+              title="Previous Page"
+            >
+              <i class="bi bi-chevron-left"></i>
+            </button>
+          </li>
+
+          <!-- Page Numbers with Ellipsis -->
+          <ng-container *ngFor="let page of getPageNumbers()">
+            <li
+              class="page-item"
+              [class.active]="page === currentPage"
+              [class.ellipsis]="page === '...'"
+            >
+              <button
+                *ngIf="page !== '...'"
+                type="button"
+                class="page-link"
+                (click)="goToPage(page)"
+              >
+                {{ page }}
+              </button>
+              <span *ngIf="page === '...'" class="page-link ellipsis-span">
+                ...
+              </span>
+            </li>
+          </ng-container>
+
+          <!-- Next Page -->
+          <li class="page-item" [class.disabled]="currentPage === totalPages">
+            <button
+              type="button"
+              class="page-link"
+              (click)="nextPage()"
+              [disabled]="currentPage === totalPages"
+              title="Next Page"
+            >
+              <i class="bi bi-chevron-right"></i>
+            </button>
+          </li>
+
+          <!-- Last Page -->
+          <li class="page-item" [class.disabled]="currentPage === totalPages">
+            <button
+              type="button"
+              class="page-link"
+              (click)="lastPage()"
+              [disabled]="currentPage === totalPages"
+              title="Last Page"
+            >
+              <i class="bi bi-chevron-double-right"></i>
+            </button>
+          </li>
+
+        </ul>
+      </nav>
 
     </div>
 

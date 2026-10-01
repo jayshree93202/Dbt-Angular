@@ -97,7 +97,7 @@ export class DbtService {
     );
   }
 
-  getFinancialYears(): Observable<FinancialYearResponse> {debugger
+  getFinancialYears(): Observable<FinancialYearResponse> {
     return this.http.post<FinancialYearResponse>(
       `${environment.apiUrl}/DBT/get-financial-year`,
       {}
@@ -136,22 +136,24 @@ getDepartmentWiseSummary(fYear: number,departmentCode: number, recordType: numbe
 
 
 
- GetDepartmentCentralSchemeList(): Observable<CentralScheme[]> {debugger
-
-  return this.http.get<CentralScheme[]>(
-    `${environment.apiUrl}/DBT/GetDepartmentCentralSchemeList`,
-    {
-      params: {
-        schTy: '1'
+  GetDepartmentCentralSchemeList(schTy: number | string = 1): Observable<CentralScheme[]> {
+    return this.http.get<CentralScheme[]>(
+      `${environment.apiUrl}/DBT/GetDepartmentCentralSchemeList`,
+      {
+        params: {
+          schTy: schTy.toString()
+        }
       }
-    }
-  );
+    );
+  }
+  GetLastUpdateScheme(deptCode: number = 0, schemeCode: string = '0'): Observable<any> {
+    const params = new HttpParams()
+      .set('deptCode', (deptCode || 0).toString())
+      .set('schemeCode', (schemeCode && schemeCode.trim() !== '') ? schemeCode.trim() : '0');
 
-}
-
- GetLastUpdateScheme(): Observable<any> {
     return this.http.get<any>(
-      `${environment.apiUrl}/DBT/GetLastUpdateScheme`
+      `${environment.apiUrl}/DBT/GetLastUpdateScheme`,
+      { params }
     );
   }
 }

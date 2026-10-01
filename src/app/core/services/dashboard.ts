@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
+import { Router } from '@angular/router';
 
 
 export interface DashboardCount {
@@ -27,6 +28,10 @@ export interface DashboardCount {
 export class DashboardService {
 
   private apiUrl = `http://localhost:5160/api/DBT`;
+
+  isLoggedIn = false;
+username = '';
+profileDropdownOpen = false;
 
 
 // 1. FINANCIAL YEAR
@@ -109,6 +114,12 @@ getCumulativeAmount(fYearId: string | number): Observable<CumulativeAmount> {deb
       `${this.apiUrl}/GetFYearWiseTotalAmount`
     );
   }
+
+  toggleProfileDropdown(): void {
+  this.profileDropdownOpen = !this.profileDropdownOpen;
+}
+
+
 
   // 8. YEAR WISE BENEFICIARY
     getFYearWiseTotalBeneficiary(): Observable<YearWiseBeneficiary[]> {
@@ -267,4 +278,8 @@ export interface YearWiseBeneficiary {
 
   totalBeneficiaries?: number;
 }
+
+
+
+
 
